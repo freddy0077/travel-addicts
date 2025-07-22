@@ -161,9 +161,9 @@ export default function AdminLogin() {
           </div>
 
           <div className="text-center">
-            <p className="text-sm text-gray-600">
-              Demo credentials: admin@traveladdict.com / admin123
-            </p>
+            {/*<p className="text-sm text-gray-600">*/}
+            {/*  Demo credentials: admin@traveladdict.com / admin123*/}
+            {/*</p>*/}
           </div>
         </form>
 
