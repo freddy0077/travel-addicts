@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo, useEffect } from 'react'
+import { useState, useMemo, useEffect, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { Filter, Grid, List, SlidersHorizontal, Search, Loader2 } from 'lucide-react'
@@ -12,7 +12,7 @@ import { useSearchTours, useSearchFilters, SearchFilters } from '@/hooks/useSear
 import { formatPrice } from '@/lib/graphql-client'
 import { cn } from '@/lib/utils'
 
-export default function ToursPage() {
+function ToursPageContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
@@ -452,5 +452,13 @@ export default function ToursPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function ToursPage() {
+  return (
+    <Suspense fallback={<Loader2 className="w-8 h-8 text-neutral-400 mx-auto" />}>
+      <ToursPageContent />
+    </Suspense>
   )
 }
