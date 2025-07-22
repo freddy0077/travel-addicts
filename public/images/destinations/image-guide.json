@@ -1,0 +1,75 @@
+{
+  "directory": "/images/destinations/",
+  "images": [
+    {
+      "filename": "serengeti-migration.jpg",
+      "destination": "Serengeti National Park",
+      "description": "Wildebeest migration in Serengeti",
+      "path": "/images/destinations/serengeti-migration.jpg",
+      "usage": "<img src=\"/images/destinations/serengeti-migration.jpg\" alt=\"Wildebeest migration in Serengeti\" />"
+    },
+    {
+      "filename": "kilimanjaro-sunrise.jpg",
+      "destination": "Mount Kilimanjaro",
+      "description": "Mount Kilimanjaro at sunrise",
+      "path": "/images/destinations/kilimanjaro-sunrise.jpg",
+      "usage": "<img src=\"/images/destinations/kilimanjaro-sunrise.jpg\" alt=\"Mount Kilimanjaro at sunrise\" />"
+    },
+    {
+      "filename": "victoria-falls.jpg",
+      "destination": "Victoria Falls",
+      "description": "Victoria Falls with rainbow mist",
+      "path": "/images/destinations/victoria-falls.jpg",
+      "usage": "<img src=\"/images/destinations/victoria-falls.jpg\" alt=\"Victoria Falls with rainbow mist\" />"
+    },
+    {
+      "filename": "zanzibar-beach.jpg",
+      "destination": "Zanzibar",
+      "description": "Zanzibar pristine beach with dhow",
+      "path": "/images/destinations/zanzibar-beach.jpg",
+      "usage": "<img src=\"/images/destinations/zanzibar-beach.jpg\" alt=\"Zanzibar pristine beach with dhow\" />"
+    },
+    {
+      "filename": "sossusvlei-dunes.jpg",
+      "destination": "Sossusvlei",
+      "description": "Red sand dunes of Sossusvlei",
+      "path": "/images/destinations/sossusvlei-dunes.jpg",
+      "usage": "<img src=\"/images/destinations/sossusvlei-dunes.jpg\" alt=\"Red sand dunes of Sossusvlei\" />"
+    },
+    {
+      "filename": "cape-town-table-mountain.jpg",
+      "destination": "Cape Town",
+      "description": "Table Mountain and Cape Town skyline",
+      "path": "/images/destinations/cape-town-table-mountain.jpg",
+      "usage": "<img src=\"/images/destinations/cape-town-table-mountain.jpg\" alt=\"Table Mountain and Cape Town skyline\" />"
+    },
+    {
+      "filename": "masai-mara-balloon.jpg",
+      "destination": "Masai Mara",
+      "description": "Hot air balloon safari over Masai Mara",
+      "path": "/images/destinations/masai-mara-balloon.jpg",
+      "usage": "<img src=\"/images/destinations/masai-mara-balloon.jpg\" alt=\"Hot air balloon safari over Masai Mara\" />"
+    },
+    {
+      "filename": "sahara-desert-morocco.jpg",
+      "destination": "Sahara Desert",
+      "description": "Sahara desert dunes with camel caravan",
+      "path": "/images/destinations/sahara-desert-morocco.jpg",
+      "usage": "<img src=\"/images/destinations/sahara-desert-morocco.jpg\" alt=\"Sahara desert dunes with camel caravan\" />"
+    },
+    {
+      "filename": "kruger-national-park.jpg",
+      "destination": "Kruger National Park",
+      "description": "African elephant in Kruger National Park",
+      "path": "/images/destinations/kruger-national-park.jpg",
+      "usage": "<img src=\"/images/destinations/kruger-national-park.jpg\" alt=\"African elephant in Kruger National Park\" />"
+    },
+    {
+      "filename": "pyramids-giza-egypt.jpg",
+      "destination": "Pyramids of Giza",
+      "description": "Great Pyramids of Giza at sunset",
+      "path": "/images/destinations/pyramids-giza-egypt.jpg",
+      "usage": "<img src=\"/images/destinations/pyramids-giza-egypt.jpg\" alt=\"Great Pyramids of Giza at sunset\" />"
+    }
+  ]
+}
