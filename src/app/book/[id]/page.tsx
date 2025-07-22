@@ -196,13 +196,14 @@ export default function BookingPage({ params }: { params: Promise<{ id: string }
             </div>
             
             <div className="relative h-64 lg:h-80 rounded-lg overflow-hidden">
-              <Image
-                src={tourData.images[0] || '/api/placeholder/600/400'}
-                alt={tourData.title}
-                fill
-                className="object-cover"
-                priority
-              />
+              {tourData.images && tourData.images.length > 0 && (
+                <Image
+                  src={tourData.images[0]}
+                  alt={tourData.title}
+                  fill
+                  className="object-cover"
+                />
+              )}
             </div>
           </div>
         </div>

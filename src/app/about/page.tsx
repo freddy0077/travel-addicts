@@ -1,7 +1,6 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 import { 
   Globe, 
   Users, 
@@ -46,43 +45,6 @@ const values = [
   },
 ];
 
-const team = [
-  {
-    name: 'Sarah Mitchell',
-    role: 'Founder & CEO',
-    image: '/api/placeholder/300/300',
-    bio: 'With 15+ years in luxury travel, Sarah founded Travel Addicts to share her passion for extraordinary journeys.',
-  },
-  {
-    name: 'David Chen',
-    role: 'Head of Operations',
-    image: '/api/placeholder/300/300',
-    bio: 'David ensures every trip runs smoothly, bringing 12 years of operational excellence to our team.',
-  },
-  {
-    name: 'Maria Rodriguez',
-    role: 'Travel Experience Designer',
-    image: '/api/placeholder/300/300',
-    bio: 'Maria crafts unique itineraries that blend luxury with authentic local experiences across Europe and Asia.',
-  },
-  {
-    name: 'James Wilson',
-    role: 'Adventure Specialist',
-    image: '/api/placeholder/300/300',
-    bio: 'James specializes in adventure and safari experiences, having led expeditions across Africa and South America.',
-  },
-];
-
-const milestones = [
-  { year: '2018', event: 'Travel Addicts founded with a vision to redefine luxury travel' },
-  { year: '2019', event: 'Launched our first curated tours to Switzerland and Italy' },
-  { year: '2020', event: 'Adapted to provide safe, flexible travel options during challenging times' },
-  { year: '2021', event: 'Expanded to cover 50+ destinations across 6 continents' },
-  { year: '2022', event: 'Won "Best Luxury Tour Operator" award from Travel Excellence Awards' },
-  { year: '2023', event: 'Reached 25,000+ happy travelers milestone' },
-  { year: '2024', event: 'Launched sustainable travel initiatives and carbon-neutral tours' },
-];
-
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50">
@@ -122,12 +84,12 @@ export default function AboutPage() {
               className="relative"
             >
               <div className="relative h-96 rounded-3xl overflow-hidden shadow-2xl">
-                <Image
-                  src="/api/placeholder/600/400"
-                  alt="Travel team exploring beautiful destination"
-                  fill
-                  className="object-cover"
-                />
+                <div className="bg-gradient-to-br from-orange-400 to-red-600 h-full flex items-center justify-center">
+                  <div className="text-white text-center">
+                    <h3 className="text-2xl font-bold mb-2">Our Story</h3>
+                    <p className="text-orange-100">Building unforgettable travel experiences</p>
+                  </div>
+                </div>
               </div>
               {/* Floating elements */}
               <div className="absolute -top-6 -right-6 bg-white/90 backdrop-blur-sm rounded-2xl p-4 shadow-large">
@@ -202,13 +164,13 @@ export default function AboutPage() {
               </div>
             </div>
             <div className="relative">
-              <div className="relative h-96 rounded-3xl overflow-hidden shadow-large">
-                <Image
-                  src="/api/placeholder/600/400"
-                  alt="Beautiful travel destination"
-                  fill
-                  className="object-cover"
-                />
+              <div className="relative h-80 rounded-2xl overflow-hidden shadow-soft">
+                <div className="bg-gradient-to-br from-blue-400 to-purple-600 h-full flex items-center justify-center">
+                  <div className="text-white text-center">
+                    <h3 className="text-2xl font-bold mb-2">Our Mission</h3>
+                    <p className="text-blue-100">Creating meaningful travel connections</p>
+                  </div>
+                </div>
               </div>
               <div className="absolute -bottom-6 -left-6 bg-white rounded-2xl p-6 shadow-large">
                 <div className="flex items-center gap-4">
@@ -296,49 +258,6 @@ export default function AboutPage() {
           </div>
         </motion.section>
 
-        {/* Team Section */}
-        <motion.section
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-20"
-        >
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-serif font-bold text-gray-900 mb-4">Meet Our Team</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Our passionate team of travel experts brings decades of combined experience 
-              to ensure your journey exceeds expectations.
-            </p>
-          </div>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {team.map((member, index) => (
-              <motion.div
-                key={member.name}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="text-center bg-white rounded-2xl overflow-hidden shadow-soft hover:shadow-medium transition-all duration-300"
-              >
-                <div className="relative h-64 overflow-hidden">
-                  <Image
-                    src={member.image}
-                    alt={member.name}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">{member.name}</h3>
-                  <div className="text-primary-600 font-medium mb-4">{member.role}</div>
-                  <p className="text-gray-600 text-sm leading-relaxed">{member.bio}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.section>
-
         {/* Timeline Section */}
         <motion.section
           initial={{ opacity: 0, y: 50 }}
@@ -352,36 +271,6 @@ export default function AboutPage() {
               From a small startup to a leading luxury travel company, here are the key 
               milestones in our journey.
             </p>
-          </div>
-          
-          <div className="relative">
-            {/* Timeline line */}
-            <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-primary-200 to-secondary-200"></div>
-            
-            <div className="space-y-12">
-              {milestones.map((milestone, index) => (
-                <motion.div
-                  key={milestone.year}
-                  initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  className={`flex items-center ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'}`}
-                >
-                  <div className={`flex-1 ${index % 2 === 0 ? 'pr-8 text-right' : 'pl-8 text-left'}`}>
-                    <div className="bg-white rounded-2xl p-6 shadow-soft">
-                      <div className="text-2xl font-bold text-primary-600 mb-2">{milestone.year}</div>
-                      <p className="text-gray-700">{milestone.event}</p>
-                    </div>
-                  </div>
-                  
-                  {/* Timeline dot */}
-                  <div className="relative z-10 w-4 h-4 bg-primary-500 rounded-full border-4 border-white shadow-medium"></div>
-                  
-                  <div className="flex-1"></div>
-                </motion.div>
-              ))}
-            </div>
           </div>
         </motion.section>
 

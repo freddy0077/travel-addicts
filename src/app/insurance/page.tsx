@@ -73,29 +73,6 @@ export default function InsurancePage() {
     }
   ];
 
-  const partners = [
-    {
-      name: "Allianz Travel",
-      logo: "/api/placeholder/120/60",
-      description: "Global leader in travel insurance with comprehensive coverage options"
-    },
-    {
-      name: "Enterprise Insurance",
-      logo: "/api/placeholder/120/60",
-      description: "Leading Ghanaian insurance company with local expertise"
-    },
-    {
-      name: "SIC Insurance",
-      logo: "/api/placeholder/120/60",
-      description: "Trusted insurance provider with excellent customer service"
-    },
-    {
-      name: "Vanguard Assurance",
-      logo: "/api/placeholder/120/60",
-      description: "Reliable coverage with competitive rates for travelers"
-    }
-  ];
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50">
       {/* Header */}
@@ -220,45 +197,6 @@ export default function InsurancePage() {
                     Get Quote
                   </button>
                 </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.section>
-
-        {/* Insurance Partners */}
-        <motion.section
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          className="mb-16"
-        >
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-serif font-bold text-gray-800 mb-4">
-              Our Insurance Partners
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              We work with trusted insurance providers to offer you the best coverage options.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {partners.map((partner, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.1 * index }}
-                className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 text-center"
-              >
-                <div className="mb-4">
-                  <img
-                    src={partner.logo}
-                    alt={partner.name}
-                    className="w-24 h-12 mx-auto object-contain"
-                  />
-                </div>
-                <h3 className="text-lg font-semibold text-gray-800 mb-2">{partner.name}</h3>
-                <p className="text-sm text-gray-600">{partner.description}</p>
               </motion.div>
             ))}
           </div>

@@ -6,7 +6,7 @@ export interface HomeTour {
   id: string;
   title: string;
   destination: string;
-  image: string;
+  image: string | null;
   price: number;
   originalPrice?: number;
   duration: string;
@@ -24,10 +24,10 @@ export function transformFeaturedTourForHome(tour: FeaturedTour): HomeTour {
     ? tour.reviews.reduce((sum, review) => sum + review.rating, 0) / tour.reviews.length
     : 4.8; // Default rating if no reviews
 
-  // Get the first image or use placeholder
+  // Get the first image or use null
   const image = tour.images && tour.images.length > 0 
     ? tour.images[0] 
-    : '/api/placeholder/400/300';
+    : null;
 
   // Convert price from pesewas to cedis
   const priceInCedis = convertPesewasToCedis(tour.priceFrom);

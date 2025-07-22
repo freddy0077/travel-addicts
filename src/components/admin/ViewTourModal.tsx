@@ -4,6 +4,7 @@ import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { X, MapPin, Star, Calendar, Users, Clock, Image as ImageIcon, Route, Target, DollarSign } from 'lucide-react';
 import { formatPrice } from '@/lib/graphql-client';
+import Image from 'next/image';
 
 interface Tour {
   id: string;
@@ -125,11 +126,14 @@ export default function ViewTourModal({ isOpen, onClose, tour }: ViewTourModalPr
                   {/* Left Column - Images and Gallery */}
                   <div className="lg:col-span-2 space-y-4">
                     <div className="relative">
-                      <img
-                        src={tour.images[0] || '/api/placeholder/600/400'}
-                        alt={tour.title}
-                        className="w-full h-64 object-cover rounded-lg"
-                      />
+                      {tour.images && tour.images.length > 0 && (
+                        <Image
+                          src={tour.images[0]}
+                          alt={tour.title}
+                          fill
+                          className="object-cover rounded-lg"
+                        />
+                      )}
                       <div className="absolute top-3 left-3 flex space-x-2">
                         {tour.featured && (
                           <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">

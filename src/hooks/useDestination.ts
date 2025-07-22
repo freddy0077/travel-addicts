@@ -123,7 +123,7 @@ export function transformDestinationForDetail(destination: DestinationWithTours)
     tours: destination.tours?.map(tour => ({
       ...tour,
       priceFrom: Math.round(tour.priceFrom / 100), // Convert from pesewas to cedis
-      image: tour.images?.[0] || '/api/placeholder/400/300' // Use first image or placeholder
+      image: tour.images?.[0] || null // Use first image or null
     })) || []
   };
 }

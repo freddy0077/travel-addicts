@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { graphqlClient, FEATURED_TOURS_QUERY, SEARCH_DESTINATIONS_QUERY, SEARCH_FILTERS_QUERY, SEARCH_TOURS_QUERY } from '@/lib/graphql-client';
+import { graphqlClient, FEATURED_TOURS_QUERY, SEARCH_DESTINATIONS_QUERY, GET_SEARCH_FILTERS_QUERY, SEARCH_TOURS_QUERY } from '@/lib/graphql-client';
 
 // Search interfaces
 export interface SearchFilters {
@@ -174,51 +174,10 @@ export function useSearchTours() {
         hasMore: searchData.hasMore
       });
 
-    } catch (err: any) {
-      console.error('❌ Error searching tours:', err);
-      setError(err.message || 'Failed to search tours');
-      
-      // Fallback to mock data for development
-      const mockTours: SearchTour[] = [
-        {
-          id: '1',
-          title: 'Amazing Safari Adventure',
-          slug: 'amazing-safari-adventure',
-          destination: {
-            id: '1',
-            name: 'Serengeti',
-            country: {
-              id: '1',
-              name: 'Tanzania',
-              code: 'TZ',
-              continent: 'Africa'
-            }
-          },
-          description: 'Experience the wild beauty of Africa',
-          highlights: ['Big Five', 'Migration', 'Camping'],
-          inclusions: ['Meals', 'Transport', 'Guide'],
-          exclusions: ['Flights', 'Insurance'],
-          duration: 7, // Changed to number
-          groupSizeMax: 12,
-          difficulty: 'Moderate',
-          priceFrom: 250000, // 2500 GHS in pesewas
-          images: ['/api/placeholder/600/400'],
-          featured: true,
-          category: 'Adventure',
-          features: ['Wildlife', 'Photography'],
-          season: 'Dry Season',
-          rating: 4.8,
-          reviewCount: 45,
-          reviews: [],
-          createdAt: '2024-01-01T00:00:00Z',
-          updatedAt: '2024-01-15T10:30:00Z',
-          bestTime: 'June to October'
-        }
-      ];
-      
-      setTours(mockTours);
-      setTotalCount(1);
-      setHasMore(false);
+    } catch (error) {
+      console.error('Error searching tours:', error);
+      setError(error instanceof Error ? error.message : 'Failed to search tours');
+      setTours([]);
     } finally {
       setLoading(false);
     }
@@ -282,44 +241,10 @@ export function useSearchDestinations() {
         hasMore: searchData.hasMore
       });
 
-    } catch (err: any) {
-      console.error('❌ Error searching destinations:', err);
-      setError(err.message || 'Failed to search destinations');
-      
-      // Fallback to mock data for development
-      const mockDestinations: SearchDestination[] = [
-        {
-          id: '1',
-          name: 'Santorini',
-          slug: 'santorini-greece',
-          country: {
-            id: '1',
-            name: 'Greece',
-            code: 'GR',
-            continent: 'Europe'
-          },
-          type: 'Island',
-          season: 'Summer',
-          description: 'Beautiful Greek island with stunning sunsets',
-          highlights: ['Sunsets', 'Architecture', 'Beaches'],
-          image: '/api/placeholder/600/400',
-          gallery: ['/api/placeholder/600/400'],
-          rating: 4.8,
-          reviewCount: 156,
-          priceFrom: 400000, // 4000 GHS in pesewas
-          duration: '5-7 days',
-          bestTime: 'April to October',
-          climate: 'Mediterranean',
-          activities: ['Sightseeing', 'Photography', 'Relaxation'],
-          featured: true,
-          createdAt: '2024-01-01T00:00:00Z',
-          updatedAt: '2024-01-15T10:30:00Z'
-        }
-      ];
-      
-      setDestinations(mockDestinations);
-      setTotalCount(1);
-      setHasMore(false);
+    } catch (error) {
+      console.error('Error searching destinations:', error);
+      setError(error instanceof Error ? error.message : 'Failed to search destinations');
+      setDestinations([]);
     } finally {
       setLoading(false);
     }
@@ -346,65 +271,17 @@ export function useSearchFilters() {
       setLoading(true);
       setError(null);
 
-      // Since the backend doesn't have searchFilters query yet, use fallback data
-      console.log('⚠️ Using fallback search filters (backend searchFilters query not implemented yet)');
-      
-      // Fallback to mock data for development
-      const mockFilters: SearchFiltersData = {
-        continents: ['Africa', 'Asia', 'Europe', 'North America', 'South America', 'Oceania'],
-        countries: [
-          { id: '1', name: 'Ghana', code: 'GH', continent: 'Africa' },
-          { id: '2', name: 'Greece', code: 'GR', continent: 'Europe' },
-          { id: '3', name: 'Japan', code: 'JP', continent: 'Asia' },
-          { id: '4', name: 'Switzerland', code: 'CH', continent: 'Europe' },
-          { id: '5', name: 'Tanzania', code: 'TZ', continent: 'Africa' },
-          { id: '6', name: 'France', code: 'FR', continent: 'Europe' },
-          { id: '7', name: 'Thailand', code: 'TH', continent: 'Asia' },
-          { id: '8', name: 'USA', code: 'US', continent: 'North America' }
-        ],
-        tourCategories: ['Adventure', 'Cultural', 'Beach', 'Nature', 'City', 'Photography'],
-        tourFeatures: ['All Meals', 'Airport Transfers', 'Professional Guide', 'Small Groups', 'Luxury Accommodation', 'Photography Focus', 'Cultural Immersion'],
-        destinationTypes: ['City', 'Island', 'Mountains', 'Beach', 'Desert', 'Forest'],
-        seasons: ['Spring', 'Summer', 'Autumn', 'Winter'],
-        priceRanges: [
-          { min: 0, max: 100000, label: 'Under ₵1,000' },
-          { min: 100000, max: 250000, label: '₵1,000 - ₵2,500' },
-          { min: 250000, max: 500000, label: '₵2,500 - ₵5,000' },
-          { min: 500000, max: 999999999, label: 'Over ₵5,000' }
-        ],
-        durationOptions: ['1-3 days', '4-7 days', '1-2 weeks', '2+ weeks']
-      };
-      
-      setFilters(mockFilters);
-      console.log('✅ Search filters loaded (fallback data):', mockFilters);
+      const result = await graphqlClient.request<{
+        searchFilters: SearchFiltersData;
+      }>(GET_SEARCH_FILTERS_QUERY);
 
-    } catch (err: any) {
-      console.error('❌ Error fetching search filters:', err);
-      setError(err.message || 'Failed to fetch search filters');
-      
-      // Even if there's an error, provide fallback data
-      const fallbackFilters: SearchFiltersData = {
-        continents: ['Africa', 'Asia', 'Europe', 'North America', 'South America', 'Oceania'],
-        countries: [
-          { id: '1', name: 'Ghana', code: 'GH', continent: 'Africa' },
-          { id: '2', name: 'Greece', code: 'GR', continent: 'Europe' },
-          { id: '3', name: 'Japan', code: 'JP', continent: 'Asia' },
-          { id: '4', name: 'Switzerland', code: 'CH', continent: 'Europe' }
-        ],
-        tourCategories: ['Adventure', 'Cultural', 'Beach', 'Nature', 'City', 'Photography'],
-        tourFeatures: ['All Meals', 'Airport Transfers', 'Professional Guide', 'Small Groups', 'Luxury Accommodation'],
-        destinationTypes: ['City', 'Island', 'Mountains', 'Beach', 'Desert', 'Forest'],
-        seasons: ['Spring', 'Summer', 'Autumn', 'Winter'],
-        priceRanges: [
-          { min: 0, max: 100000, label: 'Under ₵1,000' },
-          { min: 100000, max: 250000, label: '₵1,000 - ₵2,500' },
-          { min: 250000, max: 500000, label: '₵2,500 - ₵5,000' },
-          { min: 500000, max: 999999999, label: 'Over ₵5,000' }
-        ],
-        durationOptions: ['1-3 days', '4-7 days', '1-2 weeks', '2+ weeks']
-      };
-      
-      setFilters(fallbackFilters);
+      setFilters(result.searchFilters);
+      console.log('✅ Search filters loaded:', result.searchFilters);
+
+    } catch (error) {
+      console.error('Error fetching search filters:', error);
+      setError(error instanceof Error ? error.message : 'Failed to fetch search filters');
+      setFilters(null);
     } finally {
       setLoading(false);
     }

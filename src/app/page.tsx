@@ -14,33 +14,7 @@ import { usePopularDestinations } from '@/hooks/usePopularDestinations'
 import { transformFeaturedToursForHome } from '@/utils/tourTransformers'
 import { getFeaturedDestinationsForHome, fallbackDestinations } from '@/utils/destinationTransformers'
 import { SearchFilters } from '@/hooks/useSearch'
-
-const testimonials = [
-  {
-    id: 1,
-    name: 'Sarah Johnson',
-    location: 'New York, USA',
-    image: '/api/placeholder/80/80',
-    rating: 5,
-    text: 'An absolutely magical experience! The attention to detail and personalized service exceeded all expectations. Travel Addicts made our African safari unforgettable.'
-  },
-  {
-    id: 2,
-    name: 'Michael Chen',
-    location: 'San Francisco, USA',
-    image: '/api/placeholder/80/80',
-    rating: 5,
-    text: 'Travel Addicts transformed our anniversary trip into something extraordinary. The local guides were incredible and every moment was perfectly crafted with care.'
-  },
-  {
-    id: 3,
-    name: 'Emma Thompson',
-    location: 'London, UK',
-    image: '/api/placeholder/80/80',
-    rating: 5,
-    text: 'I\'ve traveled with many companies, but Travel Addicts stands apart. Their passion for creating authentic experiences and genuine care for travelers is remarkable.'
-  }
-]
+import { useTestimonials } from '@/hooks/useTestimonials'
 
 const whyChooseUs = [
   {
@@ -69,6 +43,7 @@ export default function Home() {
   const router = useRouter()
   const { tours: featuredToursData, loading: toursLoading, error: toursError, refetch } = useFeaturedTours(3)
   const { destinations: popularDestinationsData, loading: destinationsLoading, error: destinationsError } = usePopularDestinations()
+  const { testimonials: testimonialsData, loading: testimonialsLoading, error: testimonialsError } = useTestimonials()
   
   // Transform API data to match home page format
   const featuredTours = transformFeaturedToursForHome(featuredToursData)
@@ -435,45 +410,73 @@ export default function Home() {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <motion.div
-                key={testimonial.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="bg-white rounded-2xl p-8 shadow-soft hover:shadow-medium transition-shadow"
-              >
-                <Quote className="w-8 h-8 text-primary-600 mb-4" />
-                <p className="text-neutral-700 mb-6 leading-relaxed">
-                  {testimonial.text}
-                </p>
-                <div className="flex items-center space-x-4">
-                  <Image
-                    src={testimonial.image}
-                    alt={testimonial.name}
-                    width={48}
-                    height={48}
-                    className="rounded-full"
-                  />
-                  <div>
-                    <h4 className="font-semibold text-neutral-900">
-                      {testimonial.name}
-                    </h4>
-                    <p className="text-sm text-neutral-600">
-                      {testimonial.location}
-                    </p>
-                  </div>
-                  <div className="flex ml-auto">
-                    {[...Array(testimonial.rating)].map((_, i) => (
-                      <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                    ))}
-                  </div>
+          {testimonialsLoading ? (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {[...Array(3)].map((_, i) => (
+                <div key={i} className="bg-white rounded-2xl p-8 shadow-soft hover:shadow-medium transition-shadow">
+                  <div className="animate-pulse bg-gray-200 h-4 w-4/5 mb-4" />
+                  <div className="animate-pulse bg-gray-200 h-4 w-3/5 mb-4" />
+                  <div className="animate-pulse bg-gray-200 h-4 w-2/5 mb-4" />
                 </div>
-              </motion.div>
-            ))}
-          </div>
+              ))}
+            </div>
+          ) : testimonialsError ? (
+            <div className="text-center">
+              <h2 className="text-3xl font-bold mb-4">Error loading testimonials.</h2>
+              <p className="text-red-600 mb-4">Error: {testimonialsError}</p>
+              <button
+                onClick={() => window.location.reload()}
+                className="px-8 py-4 bg-primary-600 text-white font-semibold rounded-full hover:bg-primary-700 transition-colors shadow-large hover:shadow-glow"
+              >
+                Try Again
+              </button>
+            </div>
+          ) : testimonialsData.length === 0 ? (
+            <div className="text-center">
+              <h2 className="text-3xl font-bold mb-4">No testimonials found</h2>
+              <p className="text-gray-600 mb-4">Loading testimonials from API...</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {testimonialsData.map((testimonial, index) => (
+                <motion.div
+                  key={testimonial.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  className="bg-white rounded-2xl p-8 shadow-soft hover:shadow-medium transition-shadow"
+                >
+                  <Quote className="w-8 h-8 text-primary-600 mb-4" />
+                  <p className="text-neutral-700 mb-6 leading-relaxed">
+                    {testimonial.text}
+                  </p>
+                  <div className="flex items-center space-x-4">
+                    <Image
+                      src={testimonial.image}
+                      alt={testimonial.name}
+                      width={48}
+                      height={48}
+                      className="rounded-full"
+                    />
+                    <div>
+                      <h4 className="font-semibold text-neutral-900">
+                        {testimonial.name}
+                      </h4>
+                      <p className="text-sm text-neutral-600">
+                        {testimonial.location}
+                      </p>
+                    </div>
+                    <div className="flex ml-auto">
+                      {[...Array(testimonial.rating)].map((_, i) => (
+                        <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 

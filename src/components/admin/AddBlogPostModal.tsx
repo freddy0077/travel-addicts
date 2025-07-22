@@ -40,21 +40,22 @@ const CREATE_BLOG_POST_MUTATION = `
   }
 `;
 
-const BLOG_CATEGORIES_QUERY = `
-  query BlogCategories {
-    blogCategories {
-      id
-      name
-      slug
-    }
-  }
-`;
+// Use predefined categories since backend doesn't have separate blogCategories query
+const PREDEFINED_CATEGORIES = [
+  { id: 'travel-tips', name: 'Travel Tips', slug: 'travel-tips' },
+  { id: 'destinations', name: 'Destinations', slug: 'destinations' },
+  { id: 'culture', name: 'Culture', slug: 'culture' },
+  { id: 'adventure', name: 'Adventure', slug: 'adventure' },
+  { id: 'food', name: 'Food & Cuisine', slug: 'food' },
+  { id: 'photography', name: 'Photography', slug: 'photography' },
+  { id: 'budget-travel', name: 'Budget Travel', slug: 'budget-travel' },
+  { id: 'luxury-travel', name: 'Luxury Travel', slug: 'luxury-travel' }
+];
 
 export default function AddBlogPostModal({ isOpen, onClose, onSuccess }: AddBlogPostModalProps) {
   const [currentStep, setCurrentStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-  const [categories, setCategories] = useState<BlogCategory[]>([]);
   const [formData, setFormData] = useState<BlogPostFormData>({
     title: '',
     excerpt: '',
@@ -73,36 +74,6 @@ export default function AddBlogPostModal({ isOpen, onClose, onSuccess }: AddBlog
     { number: 2, title: 'Content', icon: Tag },
     { number: 3, title: 'SEO & Review', icon: Settings }
   ];
-
-  useEffect(() => {
-    if (isOpen) {
-      loadCategories();
-    }
-  }, [isOpen]);
-
-  const loadCategories = async () => {
-    try {
-      // For now, use mock categories since the query might not be implemented yet
-      const mockCategories: BlogCategory[] = [
-        { id: '1', name: 'Travel Tips', slug: 'travel-tips' },
-        { id: '2', name: 'Destinations', slug: 'destinations' },
-        { id: '3', name: 'Culture', slug: 'culture' },
-        { id: '4', name: 'Adventure', slug: 'adventure' },
-        { id: '5', name: 'Food & Drink', slug: 'food-drink' }
-      ];
-      setCategories(mockCategories);
-      
-      // In a real implementation, you would uncomment this:
-      // const token = localStorage.getItem('adminToken');
-      // const result = await graphqlClient.request(BLOG_CATEGORIES_QUERY, {}, {
-      //   'Authorization': `Bearer ${token}`
-      // });
-      // setCategories(result.blogCategories || []);
-    } catch (error) {
-      console.error('Error loading categories:', error);
-      setCategories([]);
-    }
-  };
 
   const handleInputChange = (field: keyof BlogPostFormData, value: string | boolean) => {
     setFormData(prev => ({
@@ -323,7 +294,7 @@ export default function AddBlogPostModal({ isOpen, onClose, onSuccess }: AddBlog
                         required
                       >
                         <option value="">Select a category</option>
-                        {categories.map(category => (
+                        {PREDEFINED_CATEGORIES.map(category => (
                           <option key={category.id} value={category.id}>
                             {category.name}
                           </option>
@@ -527,7 +498,7 @@ export default function AddBlogPostModal({ isOpen, onClose, onSuccess }: AddBlog
                         </div>
                         <div className="flex justify-between">
                           <span className="font-medium text-gray-600">Category:</span> 
-                          <span className="text-gray-900">{categories.find(c => c.id === formData.categoryId)?.name || 'Not selected'}</span>
+                          <span className="text-gray-900">{PREDEFINED_CATEGORIES.find(c => c.id === formData.categoryId)?.name || 'Not selected'}</span>
                         </div>
                         <div className="flex justify-between">
                           <span className="font-medium text-gray-600">Status:</span> 

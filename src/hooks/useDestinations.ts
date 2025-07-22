@@ -62,64 +62,6 @@ export function transformDestinationForPage(destination: Destination) {
   };
 }
 
-// Fallback destinations data for development
-const fallbackDestinations: Destination[] = [
-  {
-    id: '1',
-    name: 'Accra',
-    slug: 'accra-ghana',
-    country: {
-      id: '1',
-      name: 'Ghana',
-      code: 'GH',
-      continent: 'Africa'
-    },
-    type: 'City',
-    season: 'All Year',
-    description: 'Ghana\'s vibrant capital city with rich history, culture, and modern attractions.',
-    highlights: ['Independence Square', 'National Museum', 'Makola Market', 'Labadi Beach'],
-    image: '/api/placeholder/600/400',
-    gallery: ['/api/placeholder/600/400'],
-    rating: 4.5,
-    reviewCount: 234,
-    priceFrom: 15000, // 150 GHS in pesewas
-    duration: '2-4 days',
-    bestTime: 'November - March',
-    climate: 'Tropical',
-    activities: ['City Tours', 'Cultural Sites', 'Markets', 'Beaches'],
-    featured: true,
-    createdAt: '2024-01-01T00:00:00Z',
-    updatedAt: '2024-01-01T00:00:00Z'
-  },
-  {
-    id: '2',
-    name: 'Cape Coast',
-    slug: 'cape-coast-ghana',
-    country: {
-      id: '1',
-      name: 'Ghana',
-      code: 'GH',
-      continent: 'Africa'
-    },
-    type: 'Historical',
-    season: 'All Year',
-    description: 'Historic coastal city with slave castles and beautiful beaches.',
-    highlights: ['Cape Coast Castle', 'Elmina Castle', 'Kakum National Park', 'Beaches'],
-    image: '/api/placeholder/600/400',
-    gallery: ['/api/placeholder/600/400'],
-    rating: 4.7,
-    reviewCount: 456,
-    priceFrom: 20000, // 200 GHS in pesewas
-    duration: '3-5 days',
-    bestTime: 'November - March',
-    climate: 'Tropical',
-    activities: ['Historical Tours', 'Castle Visits', 'Beach Activities', 'Cultural Learning'],
-    featured: true,
-    createdAt: '2024-01-01T00:00:00Z',
-    updatedAt: '2024-01-01T00:00:00Z'
-  }
-];
-
 export function useDestinations(): UseDestinationsResult {
   const [destinations, setDestinations] = useState<Destination[]>([]);
   const [loading, setLoading] = useState(true);
@@ -139,14 +81,11 @@ export function useDestinations(): UseDestinationsResult {
       console.log('✅ Destinations fetched successfully:', result.destinations);
       setDestinations(result.destinations || []);
       
-    } catch (err) {
-      console.error('❌ Error fetching destinations:', err);
-      setError(err instanceof Error ? err.message : 'Failed to fetch destinations');
-      
-      // Use fallback data on error
-      console.log('🔄 Using fallback destinations data');
-      setDestinations(fallbackDestinations);
-      
+    } catch (error) {
+      console.error('Error fetching destinations:', error);
+      setError(error instanceof Error ? error.message : 'Failed to load destinations');
+      // Remove all mock data - use empty array instead
+      setDestinations([]);
     } finally {
       setLoading(false);
     }
