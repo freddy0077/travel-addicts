@@ -37,7 +37,7 @@ export function useMediaUpload(): UseMediaUploadResult {
   // Create authenticated GraphQL client
   const getAuthenticatedClient = () => {
     const token = localStorage.getItem('adminToken');
-    return new GraphQLClient('http://localhost:4000/graphql', {
+    return new GraphQLClient(process.env.NEXT_PUBLIC_GRAPHQL_URL, {
       headers: {
         authorization: token ? `Bearer ${token}` : '',
       },
