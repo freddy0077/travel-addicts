@@ -211,9 +211,7 @@ export default function DestinationPage({ params }: DestinationPageProps) {
               <h3 className="text-xl font-semibold mb-2">
                 {imageGallery[activeImageIndex]?.destination}
               </h3>
-              <p className="text-white/80">
-                {imageGallery[activeImageIndex]?.description}
-              </p>
+              <p className="text-xs text-white/80">{imageGallery[activeImageIndex]?.description}</p>
             </div>
             
             {/* Close Button */}
@@ -421,7 +419,7 @@ export default function DestinationPage({ params }: DestinationPageProps) {
                               <Star className="w-4 h-4 text-yellow-400 fill-current" />
                               <span className="font-semibold">{hotel.rating}</span>
                             </div>
-                            <p className="text-lg font-bold text-primary-600">From GH₵{hotel.priceFrom}</p>
+                            <p className="text-lg font-bold text-primary-600">From ${hotel.priceFrom}</p>
                             <p className="text-sm text-gray-500">per night</p>
                           </div>
                         </div>

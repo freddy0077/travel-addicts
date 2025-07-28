@@ -3,8 +3,8 @@
 import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, Plus, Trash2, Calendar, DollarSign } from 'lucide-react'
-import { formatPrice } from '@/lib/utils'
-import { graphqlClient, TOUR_PRICING_QUERY, CREATE_TOUR_PRICING_MUTATION, DELETE_TOUR_PRICING_MUTATION, convertPesewasToCedis } from '@/lib/graphql-client'
+import { graphqlClient, TOUR_PRICING_QUERY, CREATE_TOUR_PRICING_MUTATION, DELETE_TOUR_PRICING_MUTATION } from '@/lib/graphql-client'
+import { formatPrice } from '@/lib/currency'
 
 interface TourPricing {
   id: string
@@ -174,8 +174,8 @@ export default function TourPricingModal({
                           <div>
                             <h4 className="font-semibold text-neutral-900">{pricing.season} Season</h4>
                             <p className="text-sm text-neutral-600">
-                              Adult: {formatPrice(convertPesewasToCedis(pricing.priceAdult))} | 
-                              Child: {formatPrice(convertPesewasToCedis(pricing.priceChild))} | 
+                              Adult: {formatPrice(pricing.priceAdult)} | 
+                              Child: {formatPrice(pricing.priceChild)} | 
                               Max: {pricing.maxCapacity} people
                             </p>
                           </div>
@@ -248,7 +248,7 @@ export default function TourPricingModal({
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-neutral-700 mb-2">
-                      Adult Price (GH₵)
+                      Adult Price (USD)
                     </label>
                     <input
                       type="number"
@@ -261,7 +261,7 @@ export default function TourPricingModal({
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-neutral-700 mb-2">
-                      Child Price (GH₵)
+                      Child Price (USD)
                     </label>
                     <input
                       type="number"

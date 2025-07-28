@@ -12,7 +12,8 @@ import {
   CheckCircle,
   AlertCircle
 } from 'lucide-react';
-import { graphqlClient, formatPrice } from '@/lib/graphql-client';
+import { graphqlClient } from '@/lib/graphql-client';
+import { formatPrice } from '@/lib/currency';
 
 interface PaymentModalProps {
   isOpen: boolean;
@@ -326,7 +327,7 @@ export default function PaymentModal({ isOpen, onClose, bookingId, onPaymentUpda
 
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Amount (GH₵) *
+                        Amount (USD) *
                       </label>
                       <input
                         type="number"

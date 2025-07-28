@@ -371,7 +371,7 @@ export default function AdvancedSearchModal({
                   </h3>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div className="space-y-3">
-                      <label className="block text-sm font-semibold text-gray-700">Min Price (GH₵)</label>
+                      <label className="block text-sm font-semibold text-gray-700">Min Price (USD)</label>
                       <div className="relative group">
                         <div className="absolute inset-0 bg-gradient-to-r from-primary-500/20 to-secondary-500/20 rounded-xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                         <input
@@ -385,7 +385,7 @@ export default function AdvancedSearchModal({
                     </div>
 
                     <div className="space-y-3">
-                      <label className="block text-sm font-semibold text-gray-700">Max Price (GH₵)</label>
+                      <label className="block text-sm font-semibold text-gray-700">Max Price (USD)</label>
                       <div className="relative group">
                         <div className="absolute inset-0 bg-gradient-to-r from-primary-500/20 to-secondary-500/20 rounded-xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                         <input

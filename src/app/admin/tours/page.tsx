@@ -211,9 +211,8 @@ export default function ToursPage() {
     }
   };
 
-  const formatPrice = (priceInPesewas: number): string => {
-    const cedis = priceInPesewas / 100;
-    return `GH₵ ${cedis.toLocaleString('en-GH', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+  const formatPrice = (priceInUsd: number): string => {
+    return `$${priceInUsd.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
   };
 
   const stats = {

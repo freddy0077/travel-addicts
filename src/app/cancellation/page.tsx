@@ -50,7 +50,7 @@ export default function CancellationPolicyPage() {
               </div>
               <ul className="space-y-2 text-neutral-600">
                 <li>• 100% refund of tour cost</li>
-                <li>• Administrative fee of GH₵50 applies</li>
+                <li>• Administrative fee of $3 applies</li>
                 <li>• Refund processed within 7-14 business days</li>
                 <li>• Payment gateway fees (3.5%) non-refundable</li>
               </ul>
@@ -67,7 +67,7 @@ export default function CancellationPolicyPage() {
               <ul className="space-y-2 text-neutral-600">
                 <li>• 75% refund of tour cost</li>
                 <li>• 25% cancellation fee applies</li>
-                <li>• Administrative fee of GH₵50 applies</li>
+                <li>• Administrative fee of $3 applies</li>
                 <li>• Refund processed within 7-14 business days</li>
               </ul>
             </div>
@@ -83,7 +83,7 @@ export default function CancellationPolicyPage() {
               <ul className="space-y-2 text-neutral-600">
                 <li>• 50% refund of tour cost</li>
                 <li>• 50% cancellation fee applies</li>
-                <li>• Administrative fee of GH₵50 applies</li>
+                <li>• Administrative fee of $3 applies</li>
                 <li>• Refund processed within 7-14 business days</li>
               </ul>
             </div>
@@ -99,7 +99,7 @@ export default function CancellationPolicyPage() {
               <ul className="space-y-2 text-neutral-600">
                 <li>• 25% refund of tour cost</li>
                 <li>• 75% cancellation fee applies</li>
-                <li>• Administrative fee of GH₵50 applies</li>
+                <li>• Administrative fee of $3 applies</li>
                 <li>• Refund processed within 7-14 business days</li>
               </ul>
             </div>
@@ -193,7 +193,7 @@ export default function CancellationPolicyPage() {
                   <li>• Full refund of all payments made</li>
                   <li>• Alternative tour dates at no extra cost</li>
                   <li>• Upgrade to premium tour at same price (subject to availability)</li>
-                  <li>• Compensation for non-refundable expenses (up to GH₵500)</li>
+                  <li>• Compensation for non-refundable expenses (up to $32)</li>
                 </ul>
               </div>
             </div>
@@ -361,7 +361,7 @@ export default function CancellationPolicyPage() {
               <div>
                 <h4 className="font-medium text-primary-800 mb-2">Standard Fees:</h4>
                 <ul className="space-y-1 text-primary-700">
-                  <li>• Administrative fee: GH₵50</li>
+                  <li>• Administrative fee: $3</li>
                   <li>• Payment gateway fee: 3.5%</li>
                   <li>• Refund processing: 7-14 days</li>
                   <li>• Customer service: 24/7</li>

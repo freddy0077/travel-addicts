@@ -9,8 +9,9 @@ import {
   Check, X, ChevronLeft, ChevronRight, Play, Award,
   Wifi, Car, Utensils, Bed, Shield, Camera, Minus, Plus
 } from 'lucide-react'
-import { cn, formatPrice } from '@/lib/utils'
-import { graphqlClient, TOUR_BY_SLUG_QUERY, TOUR_PRICING_QUERY, convertPesewasToCedis } from '@/lib/graphql-client'
+import { cn } from '@/lib/utils'
+import { graphqlClient, TOUR_BY_SLUG_QUERY, TOUR_PRICING_QUERY } from '@/lib/graphql-client'
+import { formatPrice } from '@/lib/currency'
 
 interface TourData {
   id: string
@@ -173,8 +174,8 @@ export default function TourDetailPage({ params }: { params: Promise<{ slug: str
     const currentPricing = getCurrentPricing()
     if (!currentPricing) return 0
     
-    const adultPrice = convertPesewasToCedis(currentPricing.priceAdult) * adults
-    const childPrice = convertPesewasToCedis(currentPricing.priceChild) * children
+    const adultPrice = currentPricing.priceAdult * adults
+    const childPrice = currentPricing.priceChild * children
     return adultPrice + childPrice
   }
 
@@ -528,7 +529,7 @@ export default function TourDetailPage({ params }: { params: Promise<{ slug: str
                       <div className="grid md:grid-cols-3 gap-6">
                         <div className="text-center">
                           <div className="text-3xl font-bold text-primary-600 mb-1">
-                            {formatPrice(convertPesewasToCedis(tourData.priceFrom))}
+                            {formatPrice(tourData.priceFrom)}
                           </div>
                           <div className="text-sm text-neutral-600">Starting from per person</div>
                         </div>
@@ -561,12 +562,12 @@ export default function TourDetailPage({ params }: { params: Promise<{ slug: str
                                 </div>
                                 <div className="text-right">
                                   <div className="text-xl font-bold text-neutral-900">
-                                    {formatPrice(convertPesewasToCedis(pricing.priceAdult))}
+                                    {formatPrice(pricing.priceAdult)}
                                   </div>
                                   <div className="text-sm text-neutral-600">per adult</div>
                                   {pricing.priceChild > 0 && (
                                     <div className="text-sm text-neutral-500">
-                                      {formatPrice(convertPesewasToCedis(pricing.priceChild))} child
+                                      {formatPrice(pricing.priceChild)} child
                                     </div>
                                   )}
                                 </div>
@@ -612,7 +613,7 @@ export default function TourDetailPage({ params }: { params: Promise<{ slug: str
                             <p className="text-sm text-neutral-600">Full tour experience</p>
                           </div>
                           <span className="font-semibold text-neutral-900">
-                            {formatPrice(convertPesewasToCedis(tourData.priceFrom))}
+                            {formatPrice(tourData.priceFrom)}
                           </span>
                         </div>
 
@@ -623,7 +624,7 @@ export default function TourDetailPage({ params }: { params: Promise<{ slug: str
                             <p className="text-sm text-neutral-600">50% discount on adult price</p>
                           </div>
                           <span className="font-semibold text-neutral-900">
-                            {formatPrice(convertPesewasToCedis(tourData.priceFrom * 0.5))}
+                            {formatPrice(tourData.priceFrom * 0.5)}
                           </span>
                         </div>
 
@@ -823,7 +824,7 @@ export default function TourDetailPage({ params }: { params: Promise<{ slug: str
               <div className="mb-6">
                 <div className="flex items-center space-x-2 mb-2">
                   <span className="text-3xl font-bold text-neutral-900">
-                    {formatPrice(convertPesewasToCedis(tourData.priceFrom))}
+                    {formatPrice(tourData.priceFrom)}
                   </span>
                 </div>
                 <p className="text-sm text-neutral-600">per person</p>
@@ -892,13 +893,13 @@ export default function TourDetailPage({ params }: { params: Promise<{ slug: str
 
               <div className="border-t border-neutral-200 pt-4 mb-6">
                 <div className="flex items-center justify-between text-sm mb-2">
-                  <span className="text-neutral-600">Adults ({adults} × {formatPrice(convertPesewasToCedis(tourData.priceFrom))})</span>
-                  <span className="font-medium">{formatPrice(convertPesewasToCedis(tourData.priceFrom) * adults)}</span>
+                  <span className="text-neutral-600">Adults ({adults} × {formatPrice(tourData.priceFrom)})</span>
+                  <span className="font-medium">{formatPrice(tourData.priceFrom * adults)}</span>
                 </div>
                 {children > 0 && (
                   <div className="flex items-center justify-between text-sm mb-2">
-                    <span className="text-neutral-600">Children ({children} × {formatPrice(convertPesewasToCedis(tourData.priceFrom) * 0.5)})</span>
-                    <span className="font-medium">{formatPrice(convertPesewasToCedis(tourData.priceFrom) * 0.5 * children)}</span>
+                    <span className="text-neutral-600">Children ({children} × {formatPrice(tourData.priceFrom * 0.5)})</span>
+                    <span className="font-medium">{formatPrice(tourData.priceFrom * 0.5 * children)}</span>
                   </div>
                 )}
                 <div className="flex items-center justify-between font-semibold text-lg pt-2 border-t border-neutral-200">

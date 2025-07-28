@@ -106,14 +106,14 @@ export function usePaystack() {
     }
   };
 
-  // Helper function to convert pesewas to kobo for Paystack
-  const convertPesewasToKobo = (pesewas: number): number => {
-    return pesewas; // 1 pesewa = 1 kobo (both are 1/100 of main currency)
+  // Helper function to convert GHS to kobo for Paystack
+  const convertGhsToKobo = (ghs: number): number => {
+    return Math.round(ghs * 100); // 1 GHS = 100 kobo
   };
 
-  // Helper function to convert kobo to pesewas
-  const convertKoboToPesewas = (kobo: number): number => {
-    return kobo; // 1 kobo = 1 pesewa (both are 1/100 of main currency)
+  // Helper function to convert kobo to GHS
+  const convertKoboToGhs = (kobo: number): number => {
+    return kobo / 100; // 100 kobo = 1 GHS
   };
 
   // Generate a unique payment reference
@@ -126,8 +126,8 @@ export function usePaystack() {
   return {
     initializePayment,
     verifyPayment,
-    convertPesewasToKobo,
-    convertKoboToPesewas,
+    convertGhsToKobo,
+    convertKoboToGhs,
     generateReference,
     isLoading,
     error,

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { X, Upload, MapPin, DollarSign, Star, Globe, Calendar, Camera, Sparkles, Plus, Minus } from 'lucide-react';
-import { graphqlClient, CREATE_DESTINATION_MUTATION, convertCedisToPesewas } from '@/lib/graphql-client';
+import { graphqlClient, CREATE_DESTINATION_MUTATION } from '@/lib/graphql-client';
 import MediaUpload from '@/components/ui/MediaUpload';
 
 interface AddDestinationModalProps {
@@ -115,7 +115,7 @@ export default function AddDestinationModal({ isOpen, onClose, onDestinationAdde
         highlights: formData.highlights.filter(h => h.trim() !== ''),
         image: formData.image || '/images/placeholder-destination.jpg',
         gallery: formData.gallery.filter(g => g.trim() !== ''),
-        priceFrom: convertCedisToPesewas(parseFloat(formData.priceFrom)),
+        priceFrom: parseFloat(formData.priceFrom),
         duration: formData.duration || '3-5 days',
         bestTime: formData.bestTime || 'Year round',
         climate: formData.climate || 'Tropical',

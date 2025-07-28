@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Calendar, Users, CreditCard, User, Mail, Phone, AlertCircle, Loader, CheckCircle } from 'lucide-react';
+import { Calendar, Users, CreditCard, User, Mail, Phone, AlertCircle, Loader, CheckCircle, Banknote, MapPin } from 'lucide-react';
 import { useBooking, CreateBookingInput, BookingCustomer, BookingTraveler } from '@/hooks/useBooking';
-import { convertPesewasToCedis } from '@/lib/graphql-client';
+import { formatPrice, formatPriceWithConversionSync, preparePaymentConversionSync } from '@/lib/currency';
 import PaystackPayment from './PaystackPayment';
 
 interface TourData {
@@ -23,6 +23,31 @@ interface TourData {
 interface BookingFormProps {
   tour: TourData;
   onBookingSuccess: (booking: any) => void;
+}
+
+// Frontend traveler interface (includes additional fields for form)
+interface FormBookingTraveler {
+  firstName: string;
+  lastName: string;
+  dateOfBirth: string;
+  nationality: string;
+  passportNumber: string;
+  type: 'adult' | 'child';
+  dietaryRequirements: string;
+  medicalConditions: string;
+}
+
+interface BookingFormState {
+  currentStep: number;
+  selectedDate: string;
+  adults: number;
+  children: number;
+  customerInfo: BookingCustomer;
+  travelers: FormBookingTraveler[];
+  paymentReference: string | null;
+  paymentVerified: boolean;
+  paymentMethod: 'online' | 'cash';
+  cashPaymentReceipt: File | null;
 }
 
 export default function BookingForm({ tour, onBookingSuccess }: BookingFormProps) {
@@ -49,28 +74,33 @@ export default function BookingForm({ tour, onBookingSuccess }: BookingFormProps
   });
 
   // Travelers information
-  const [travelers, setTravelers] = useState<BookingTraveler[]>([]);
+  const [travelers, setTravelers] = useState<FormBookingTraveler[]>([]);
 
   // Payment information
   const [paymentReference, setPaymentReference] = useState<string | null>(null);
   const [paymentVerified, setPaymentVerified] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState<'online' | 'cash'>('online');
+  const [cashPaymentReceipt, setCashPaymentReceipt] = useState<File | null>(null);
 
   useEffect(() => {
     initializeTravelers(adults, children);
-  }, []);
+  }, [adults, children]);
 
-  // Initialize travelers when counts change
+  // Initialize travelers array
   const initializeTravelers = (adultCount: number, childCount: number) => {
-    const newTravelers: BookingTraveler[] = [];
+    const newTravelers: FormBookingTraveler[] = [];
     
     // Add adults
     for (let i = 0; i < adultCount; i++) {
       newTravelers.push({
-        firstName: i === 0 ? customerInfo.firstName : '',
-        lastName: i === 0 ? customerInfo.lastName : '',
-        age: 25,
+        firstName: '',
+        lastName: '',
+        dateOfBirth: '',
+        nationality: '',
         passportNumber: '',
-        dietaryRequirements: ''
+        type: 'adult',
+        dietaryRequirements: '',
+        medicalConditions: ''
       });
     }
     
@@ -79,9 +109,12 @@ export default function BookingForm({ tour, onBookingSuccess }: BookingFormProps
       newTravelers.push({
         firstName: '',
         lastName: '',
-        age: 10,
+        dateOfBirth: '',
+        nationality: '',
         passportNumber: '',
-        dietaryRequirements: ''
+        type: 'child',
+        dietaryRequirements: '',
+        medicalConditions: ''
       });
     }
     
@@ -123,22 +156,46 @@ export default function BookingForm({ tour, onBookingSuccess }: BookingFormProps
 
   // Handle form submission
   const handleSubmit = async () => {
-    if (!paymentVerified || !paymentReference) {
-      alert('Please complete payment before booking');
+    if (paymentMethod === 'online' && !paymentVerified) {
+      alert('Please complete online payment before booking');
+      return;
+    }
+
+    if (paymentMethod === 'cash' && !cashPaymentReceipt) {
+      alert('Please upload your payment receipt before completing the booking');
       return;
     }
 
     try {
-      // Validate required fields
-      if (!selectedDate || !customerInfo.email || !customerInfo.firstName || !customerInfo.lastName || !customerInfo.phone) {
-        alert('Please fill in all required fields');
-        return;
-      }
-
-      // Calculate end date (tour duration days from start date)
+      // Calculate end date based on tour duration
       const startDate = new Date(selectedDate);
       const endDate = new Date(startDate);
       endDate.setDate(startDate.getDate() + tour.duration);
+
+      // Transform travelers data to match GraphQL schema
+      const transformedTravelers: BookingTraveler[] = travelers
+        .filter(t => t.firstName && t.lastName)
+        .map(traveler => {
+          // Calculate age from date of birth
+          let age = 25; // Default age
+          if (traveler.dateOfBirth) {
+            const birthDate = new Date(traveler.dateOfBirth);
+            const today = new Date();
+            age = today.getFullYear() - birthDate.getFullYear();
+            const monthDiff = today.getMonth() - birthDate.getMonth();
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+              age--;
+            }
+          }
+
+          return {
+            firstName: traveler.firstName,
+            lastName: traveler.lastName,
+            age: age,
+            passportNumber: traveler.passportNumber || '',
+            dietaryRequirements: traveler.dietaryRequirements || ''
+          };
+        });
 
       const bookingInput: CreateBookingInput = {
         tourId: tour.id,
@@ -148,8 +205,8 @@ export default function BookingForm({ tour, onBookingSuccess }: BookingFormProps
         childrenCount: children,
         totalPrice: calculateTotalPrice(),
         customer: customerInfo,
-        travelers: travelers.filter(t => t.firstName && t.lastName), // Only include completed travelers
-        paymentReference
+        travelers: transformedTravelers,
+        paymentMethod: paymentMethod === 'online' ? 'CARD' : 'CASH'
       };
 
       const result = await createBooking(bookingInput);
@@ -186,8 +243,8 @@ export default function BookingForm({ tour, onBookingSuccess }: BookingFormProps
         alert(`Please enter last name for traveler ${i + 1}`);
         return false;
       }
-      if (!traveler.age || traveler.age < 1 || traveler.age > 120) {
-        alert(`Please enter a valid age for traveler ${i + 1}`);
+      if (!traveler.dateOfBirth || !traveler.nationality || !traveler.passportNumber) {
+        alert(`Please enter required information for traveler ${i + 1}`);
         return false;
       }
     }
@@ -374,18 +431,20 @@ export default function BookingForm({ tour, onBookingSuccess }: BookingFormProps
               <h4 className="font-medium text-neutral-900 mb-2">Price Summary</h4>
               <div className="space-y-1 text-sm">
                 <div className="flex justify-between">
-                  <span>Adults ({adults}) × GH₵{convertPesewasToCedis(tour.priceFrom).toLocaleString()}</span>
-                  <span>GH₵{convertPesewasToCedis(tour.priceFrom * adults).toLocaleString()}</span>
+                  <span>Adults ({adults}) × {formatPrice(tour.priceFrom)}</span>
+                  <span>{formatPrice(tour.priceFrom * adults)}</span>
                 </div>
                 {children > 0 && (
                   <div className="flex justify-between">
-                    <span>Children ({children}) × GH₵{convertPesewasToCedis(Math.round(tour.priceFrom * 0.7)).toLocaleString()}</span>
-                    <span>GH₵{convertPesewasToCedis(Math.round(tour.priceFrom * 0.7) * children).toLocaleString()}</span>
+                    <span>Children ({children}) × {formatPrice(Math.round(tour.priceFrom * 0.7))}</span>
+                    <span>{formatPrice(Math.round(tour.priceFrom * 0.7) * children)}</span>
                   </div>
                 )}
-                <div className="border-t pt-1 flex justify-between font-semibold">
-                  <span>Total</span>
-                  <span>GH₵{convertPesewasToCedis(calculateTotalPrice()).toLocaleString()}</span>
+                <div className="border-t pt-1 mt-3">
+                  <div className="flex justify-between font-semibold">
+                    <span>Total</span>
+                    <span>{formatPriceWithConversionSync(calculateTotalPrice())}</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -440,35 +499,50 @@ export default function BookingForm({ tour, onBookingSuccess }: BookingFormProps
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-neutral-700 mb-1">
-                        Age *
+                        Date of Birth *
                       </label>
                       <input
-                        type="number"
-                        value={traveler.age}
+                        type="date"
+                        value={traveler.dateOfBirth}
                         onChange={(e) => {
                           const newTravelers = [...travelers];
-                          newTravelers[index].age = parseInt(e.target.value) || 0;
+                          newTravelers[index].dateOfBirth = e.target.value;
                           setTravelers(newTravelers);
                         }}
-                        min="0"
-                        max="120"
                         className="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                         required
                       />
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-neutral-700 mb-1">
-                        Passport Number
+                        Nationality *
                       </label>
                       <input
                         type="text"
-                        value={traveler.passportNumber || ''}
+                        value={traveler.nationality}
+                        onChange={(e) => {
+                          const newTravelers = [...travelers];
+                          newTravelers[index].nationality = e.target.value;
+                          setTravelers(newTravelers);
+                        }}
+                        className="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-neutral-700 mb-1">
+                        Passport Number *
+                      </label>
+                      <input
+                        type="text"
+                        value={traveler.passportNumber}
                         onChange={(e) => {
                           const newTravelers = [...travelers];
                           newTravelers[index].passportNumber = e.target.value;
                           setTravelers(newTravelers);
                         }}
                         className="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                        required
                       />
                     </div>
                     <div className="md:col-span-2">
@@ -484,6 +558,22 @@ export default function BookingForm({ tour, onBookingSuccess }: BookingFormProps
                           setTravelers(newTravelers);
                         }}
                         placeholder="e.g., Vegetarian, Gluten-free, No nuts"
+                        className="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                      />
+                    </div>
+                    <div className="md:col-span-2">
+                      <label className="block text-sm font-medium text-neutral-700 mb-1">
+                        Medical Conditions
+                      </label>
+                      <input
+                        type="text"
+                        value={traveler.medicalConditions || ''}
+                        onChange={(e) => {
+                          const newTravelers = [...travelers];
+                          newTravelers[index].medicalConditions = e.target.value;
+                          setTravelers(newTravelers);
+                        }}
+                        placeholder="e.g., Diabetes, Epilepsy, Allergies"
                         className="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                       />
                     </div>
@@ -570,7 +660,7 @@ export default function BookingForm({ tour, onBookingSuccess }: BookingFormProps
                   type="text"
                   value={customerInfo.emergencyContact || ''}
                   onChange={(e) => setCustomerInfo({...customerInfo, emergencyContact: e.target.value})}
-                  placeholder="Name and phone number"
+                  placeholder="+233 24 123 4567"
                   className="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 />
               </div>
@@ -588,6 +678,64 @@ export default function BookingForm({ tour, onBookingSuccess }: BookingFormProps
               <p className="text-neutral-600">
                 Secure payment processing with Paystack
               </p>
+            </div>
+
+            {/* Payment Method Selection */}
+            <div className="mb-6">
+              <label className="block text-sm font-medium text-neutral-700 mb-3">
+                Payment Method
+              </label>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div 
+                  className={`border-2 rounded-lg p-4 cursor-pointer transition-all ${
+                    paymentMethod === 'online' 
+                      ? 'border-primary-500 bg-primary-50' 
+                      : 'border-neutral-200 hover:border-neutral-300'
+                  }`}
+                  onClick={() => setPaymentMethod('online')}
+                >
+                  <div className="flex items-center">
+                    <input
+                      type="radio"
+                      name="paymentMethod"
+                      value="online"
+                      checked={paymentMethod === 'online'}
+                      onChange={(e) => setPaymentMethod(e.target.value)}
+                      className="mr-3"
+                    />
+                    <CreditCard className="w-5 h-5 mr-2 text-primary-600" />
+                    <div>
+                      <span className="font-medium text-neutral-900">Online Payment</span>
+                      <p className="text-sm text-neutral-600">Pay securely with Paystack</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div 
+                  className={`border-2 rounded-lg p-4 cursor-pointer transition-all ${
+                    paymentMethod === 'cash' 
+                      ? 'border-primary-500 bg-primary-50' 
+                      : 'border-neutral-200 hover:border-neutral-300'
+                  }`}
+                  onClick={() => setPaymentMethod('cash')}
+                >
+                  <div className="flex items-center">
+                    <input
+                      type="radio"
+                      name="paymentMethod"
+                      value="cash"
+                      checked={paymentMethod === 'cash'}
+                      onChange={(e) => setPaymentMethod(e.target.value)}
+                      className="mr-3"
+                    />
+                    <Banknote className="w-5 h-5 mr-2 text-primary-600" />
+                    <div>
+                      <span className="font-medium text-neutral-900">Bank Transfer</span>
+                      <p className="text-sm text-neutral-600">Pay via bank transfer</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
 
             {/* Booking Summary */}
@@ -612,10 +760,10 @@ export default function BookingForm({ tour, onBookingSuccess }: BookingFormProps
                     <span className="font-medium">{children}</span>
                   </div>
                 )}
-                <div className="border-t pt-3 mt-3">
-                  <div className="flex justify-between text-lg font-semibold">
+                <div className="border-t pt-1 mt-3">
+                  <div className="flex justify-between font-semibold">
                     <span>Total Amount:</span>
-                    <span>GH₵ {(calculateTotalPrice() / 100).toFixed(2)}</span>
+                    <span>{formatPriceWithConversionSync(calculateTotalPrice())}</span>
                   </div>
                 </div>
               </div>
@@ -635,24 +783,87 @@ export default function BookingForm({ tour, onBookingSuccess }: BookingFormProps
             )}
 
             {/* Paystack Payment Button */}
-            {!paymentVerified && (
+            {paymentMethod === 'online' && !paymentVerified && (
               <PaystackPayment
                 email={customerInfo.email}
-                amount={calculateTotalPrice()} // Amount in pesewas
+                amount={calculateTotalPrice()} // Amount in USD
                 currency="GHS"
                 onSuccess={handlePaymentSuccess}
                 onError={handlePaymentError}
                 metadata={{
                   tour_id: tour.id,
-                  tour_title: tour.title,
-                  customer_name: `${customerInfo.firstName} ${customerInfo.lastName}`,
                   adults,
                   children,
                   selected_date: selectedDate
                 }}
-                buttonText={`Pay GH₵ ${(calculateTotalPrice() / 100).toFixed(2)}`}
+                buttonText={`Pay ${formatPriceWithConversionSync(calculateTotalPrice())}`}
                 className="w-full"
               />
+            )}
+
+            {/* Cash Payment Instructions */}
+            {paymentMethod === 'cash' && (
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
+                <div className="flex items-start">
+                  <MapPin className="w-5 h-5 text-blue-600 mr-3 mt-0.5" />
+                  <div className="flex-1">
+                    <h4 className="font-semibold text-blue-900 mb-3">Bank Transfer Payment Instructions</h4>
+                    <p className="text-blue-800 mb-4">
+                      Please transfer the total amount of <strong>{formatPriceWithConversionSync(calculateTotalPrice())}</strong> to our bank account:
+                    </p>
+                    
+                    <div className="bg-white rounded-lg p-4 mb-4 border border-blue-200">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div>
+                          <span className="text-sm font-medium text-neutral-600">Account Name:</span>
+                          <p className="font-semibold text-neutral-900">Travel Addicts Ghana Ltd</p>
+                        </div>
+                        <div>
+                          <span className="text-sm font-medium text-neutral-600">Account Number:</span>
+                          <p className="font-semibold text-neutral-900">1234567890</p>
+                        </div>
+                        <div>
+                          <span className="text-sm font-medium text-neutral-600">Bank Name:</span>
+                          <p className="font-semibold text-neutral-900">Ecobank Ghana</p>
+                        </div>
+                        <div>
+                          <span className="text-sm font-medium text-neutral-600">Branch:</span>
+                          <p className="font-semibold text-neutral-900">Accra Main Branch</p>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="mb-4">
+                      <p className="text-blue-800 font-medium mb-2">Important Notes:</p>
+                      <ul className="text-blue-700 text-sm space-y-1">
+                        <li>• Use your booking reference as the transfer description</li>
+                        <li>• Keep your payment receipt for verification</li>
+                        <li>• Upload a clear photo or scan of your receipt below</li>
+                        <li>• Your booking will be confirmed once payment is verified</li>
+                      </ul>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-medium text-blue-900 mb-2">
+                        Upload Payment Receipt *
+                      </label>
+                      <input
+                        type="file"
+                        accept=".pdf, .jpg, .jpeg, .png"
+                        onChange={(e) => setCashPaymentReceipt(e.target.files?.[0] || null)}
+                        className="w-full px-3 py-2 border border-blue-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
+                        required
+                      />
+                      {cashPaymentReceipt && (
+                        <p className="text-sm text-green-600 mt-2 flex items-center">
+                          <CheckCircle className="w-4 h-4 mr-1" />
+                          Receipt uploaded: {cashPaymentReceipt.name}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
             )}
           </div>
         )}

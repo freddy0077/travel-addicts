@@ -38,7 +38,8 @@ import AdminLayout from '@/components/admin/AdminLayout';
 import AddDestinationModal from '@/components/admin/AddDestinationModal';
 import ViewDestinationModal from '@/components/admin/ViewDestinationModal';
 import EditDestinationModal from '@/components/admin/EditDestinationModal';
-import { graphqlClient, DESTINATIONS_QUERY, DELETE_DESTINATION_MUTATION, formatPrice } from '@/lib/graphql-client';
+import { graphqlClient, DESTINATIONS_QUERY, DELETE_DESTINATION_MUTATION } from '@/lib/graphql-client';
+import { formatPrice } from '@/lib/currency';
 
 interface Destination {
   id: string;

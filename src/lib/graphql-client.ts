@@ -1042,15 +1042,8 @@ export const MEDIA_FILES_QUERY = `
 `;
 
 // Helper functions
-export const formatPrice = (priceInPesewas: number): string => {
-  const cedis = priceInPesewas / 100;
-  return `GH₵ ${cedis.toLocaleString('en-GH', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+export const formatPrice = (priceInUsd: number): string => {
+  return `$${priceInUsd.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
 };
 
-export const convertCedisToPesewas = (cedis: number): number => {
-  return Math.round(cedis * 100);
-};
-
-export const convertPesewasToCedis = (pesewas: number): number => {
-  return pesewas / 100;
-};
+// All prices are now handled in USD by default, converted to cedis only for payment processing

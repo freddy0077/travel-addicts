@@ -5,7 +5,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Heart, Star, Clock, Users, MapPin } from 'lucide-react'
-import { cn, formatPrice } from '@/lib/utils'
+import { cn } from '@/lib/utils'
+import { formatPrice } from '@/lib/currency'
 
 interface TourCardProps {
   tour: {

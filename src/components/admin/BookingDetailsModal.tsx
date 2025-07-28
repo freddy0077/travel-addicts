@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { X, Calendar, Users, MapPin, CreditCard, Phone, Mail, User, FileText, CheckCircle, XCircle, Clock } from 'lucide-react';
-import { graphqlClient, formatPrice } from '@/lib/graphql-client';
+import { graphqlClient } from '@/lib/graphql-client';
+import { formatPrice } from '@/lib/currency';
 
 interface BookingDetailsModalProps {
   isOpen: boolean;

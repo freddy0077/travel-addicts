@@ -24,13 +24,14 @@ export interface BookingTraveler {
 
 export interface CreateBookingInput {
   tourId: string;
-  selectedDate: string;
-  adults: number;
-  children: number;
+  startDate: string;
+  endDate: string;
+  adultsCount: number;
+  childrenCount: number;
   totalPrice: number;
   customer: BookingCustomer;
   travelers: BookingTraveler[];
-  paymentReference: string;
+  paymentMethod: 'CASH' | 'CARD';
 }
 
 export interface BookingResult {

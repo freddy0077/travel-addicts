@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { X, Upload, MapPin, DollarSign, Star, Globe, Calendar, Camera, Sparkles, Plus, Minus, Users, Clock, Mountain } from 'lucide-react';
-import { graphqlClient, CREATE_TOUR_MUTATION, DESTINATIONS_QUERY, convertCedisToPesewas } from '@/lib/graphql-client';
+import { graphqlClient, CREATE_TOUR_MUTATION, DESTINATIONS_QUERY } from '@/lib/graphql-client';
 import MediaUpload from '@/components/ui/MediaUpload';
 
 interface AddTourModalProps {
@@ -151,7 +151,7 @@ export default function AddTourModal({ isOpen, onClose, onTourAdded }: AddTourMo
         duration: parseInt(formData.duration),
         groupSizeMax: parseInt(formData.groupSizeMax),
         difficulty: formData.difficulty,
-        priceFrom: convertCedisToPesewas(parseFloat(formData.priceFrom)),
+        priceFrom: parseFloat(formData.priceFrom),
         images: formData.images.filter(img => img.trim() !== ''),
         featured: formData.featured
       };

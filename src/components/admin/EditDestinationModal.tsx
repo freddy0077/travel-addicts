@@ -70,7 +70,7 @@ export default function EditDestinationModal({
         name: destination.name,
         description: destination.description,
         mainImage: destination.image,
-        priceFrom: Math.round(destination.priceFrom / 100), // Convert from pesewas to cedis
+        priceFrom: destination.priceFrom, // Already in cedis
         featured: destination.featured,
         type: destination.type,
         season: destination.season,
@@ -245,7 +245,7 @@ export default function EditDestinationModal({
                       <div className="grid grid-cols-2 gap-4">
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-1">
-                            Price From (GH₵) *
+                            Price From (USD) *
                           </label>
                           <input
                             type="number"

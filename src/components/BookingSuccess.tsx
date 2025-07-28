@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { Check, Calendar, MapPin, Users, Mail, Phone, Copy, Download } from 'lucide-react';
 import { BookingResult } from '@/hooks/useBooking';
-import { convertPesewasToCedis } from '@/lib/graphql-client';
+import { formatPrice, formatPriceWithConversion } from '@/lib/currency';
 
 interface BookingSuccessProps {
   booking: BookingResult;
@@ -120,7 +120,7 @@ export default function BookingSuccess({ booking, onNewBooking }: BookingSuccess
               <div className="flex justify-between">
                 <span className="text-neutral-600">Total Price:</span>
                 <span className="font-semibold text-neutral-900">
-                  GH₵{convertPesewasToCedis(booking.totalPrice).toLocaleString()}
+                  {formatPriceWithConversion(booking.totalPrice)}
                 </span>
               </div>
               <div className="flex justify-between">

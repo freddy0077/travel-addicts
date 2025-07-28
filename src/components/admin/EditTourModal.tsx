@@ -101,7 +101,7 @@ export default function EditTourModal({
         duration: tour.duration,
         groupSizeMax: tour.groupSizeMax,
         difficulty: tour.difficulty,
-        priceFrom: Math.round(tour.priceFrom / 100), // Convert from pesewas to cedis
+        priceFrom: tour.priceFrom, // Already in cedis
         images: tour.images || [],
         featured: tour.featured,
         status: tour.status,
@@ -142,7 +142,7 @@ export default function EditTourModal({
         duration: formData.duration,
         groupSizeMax: formData.groupSizeMax, // Backend expects groupSizeMax, not groupSize
         difficulty: formData.difficulty,
-        priceFrom: formData.priceFrom * 100, // Convert cedis to pesewas
+        priceFrom: formData.priceFrom, // Already in cedis
         images: formData.images,
         featured: formData.featured
         // Note: status is not part of UpdateTourInput schema
@@ -353,7 +353,7 @@ export default function EditTourModal({
 
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-1">
-                            Price From (GH₵) *
+                            Price From (USD) *
                           </label>
                           <input
                             type="number"

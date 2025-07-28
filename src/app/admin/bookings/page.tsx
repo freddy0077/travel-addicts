@@ -33,7 +33,8 @@ import AdminLayout from '@/components/admin/AdminLayout';
 import BookingDetailsModal from '@/components/admin/BookingDetailsModal';
 import CreateBookingModal from '@/components/admin/CreateBookingModal';
 import PaymentModal from '@/components/admin/PaymentModal';
-import { graphqlClient, formatPrice } from '@/lib/graphql-client';
+import { graphqlClient } from '@/lib/graphql-client';
+import { formatPrice } from '@/lib/currency';
 
 interface Booking {
   id: string;

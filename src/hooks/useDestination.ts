@@ -77,19 +77,19 @@ export function transformDestinationForDetail(destination: DestinationWithTours)
         method: 'Flight + Drive',
         duration: '5-6 hours',
         description: `Fly to Accra, then drive to ${destination.name}`,
-        cost: 'GH₵800-1200'
+        cost: '$52-78'
       },
       {
         method: 'Direct Drive',
         duration: '4-5 hours',
         description: `Direct drive from Accra to ${destination.name}`,
-        cost: 'GH₵300-500'
+        cost: '$19-32'
       },
       {
         method: 'Bus + Taxi',
         duration: '6-7 hours',
         description: `Bus to nearest town, then taxi to ${destination.name}`,
-        cost: 'GH₵150-250'
+        cost: '$10-16'
       }
     ],
     // Default nearby attractions - in real app, this would come from API

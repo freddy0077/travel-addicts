@@ -11,13 +11,13 @@ export default function InsurancePage() {
       title: "Comprehensive Travel Insurance",
       description: "Complete protection for your entire journey",
       features: [
-        "Medical expenses up to GH₵500,000",
+        "Medical expenses up to $32,258",
         "Trip cancellation & interruption",
         "Lost luggage compensation",
         "Emergency evacuation",
         "24/7 assistance hotline"
       ],
-      price: "From GH₵150 per person",
+      price: "From $10 per person",
       recommended: true
     },
     {
@@ -25,13 +25,13 @@ export default function InsurancePage() {
       title: "Medical Travel Insurance",
       description: "Essential medical coverage for peace of mind",
       features: [
-        "Medical expenses up to GH₵250,000",
+        "Medical expenses up to $16,129",
         "Emergency dental treatment",
         "Prescription medication",
         "Hospital accommodation",
         "Medical repatriation"
       ],
-      price: "From GH₵80 per person",
+      price: "From $5 per person",
       recommended: false
     },
     {
@@ -45,7 +45,7 @@ export default function InsurancePage() {
         "Travel document replacement",
         "Currency exchange protection"
       ],
-      price: "From GH₵120 per person",
+      price: "From $8 per person",
       recommended: false
     }
   ];

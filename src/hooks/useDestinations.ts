@@ -19,7 +19,7 @@ export interface Destination {
   gallery: string[];
   rating: number;
   reviewCount: number;
-  priceFrom: number; // in pesewas
+  priceFrom: number; // in USD
   duration: string;
   bestTime: string;
   climate: string;
@@ -53,7 +53,7 @@ export function transformDestinationForPage(destination: Destination) {
     rating: destination.rating,
     reviewCount: destination.reviewCount,
     tourCount: Math.floor(Math.random() * 20) + 5, // Mock tour count for now
-    priceFrom: Math.round(destination.priceFrom / 100), // Convert pesewas to cedis
+    priceFrom: destination.priceFrom, // Already in USD
     duration: destination.duration,
     bestTime: destination.bestTime,
     featured: destination.featured,

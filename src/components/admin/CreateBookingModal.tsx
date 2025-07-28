@@ -17,7 +17,8 @@ import {
   Plus,
   Minus
 } from 'lucide-react';
-import { graphqlClient, formatPrice, TOURS_QUERY } from '@/lib/graphql-client';
+import { graphqlClient, TOURS_QUERY } from '@/lib/graphql-client';
+import { formatPrice } from '@/lib/currency';
 import DestinationAutocomplete from '@/components/ui/DestinationAutocomplete';
 
 interface Tour {
@@ -161,7 +162,7 @@ export default function CreateBookingModal({ isOpen, onClose, onBookingCreated }
         {
           id: '1',
           title: 'Accra City Tour',
-          priceFrom: 15000, // 150 GHS in pesewas
+          priceFrom: 10, // 10 USD
           destination: {
             name: 'Accra',
             country: { name: 'Ghana' }
@@ -170,7 +171,7 @@ export default function CreateBookingModal({ isOpen, onClose, onBookingCreated }
         {
           id: '2',
           title: 'Cape Coast Castle Experience',
-          priceFrom: 25000, // 250 GHS in pesewas
+          priceFrom: 16, // 16 USD
           destination: {
             name: 'Cape Coast',
             country: { name: 'Ghana' }
@@ -179,7 +180,7 @@ export default function CreateBookingModal({ isOpen, onClose, onBookingCreated }
         {
           id: '3',
           title: 'Kumasi Cultural Safari',
-          priceFrom: 35000, // 350 GHS in pesewas
+          priceFrom: 23, // 23 USD
           destination: {
             name: 'Kumasi',
             country: { name: 'Ghana' }
@@ -188,7 +189,7 @@ export default function CreateBookingModal({ isOpen, onClose, onBookingCreated }
         {
           id: '4',
           title: 'Busua Beach Getaway',
-          priceFrom: 45000, // 450 GHS in pesewas
+          priceFrom: 29, // 29 USD
           destination: {
             name: 'Busua Beach',
             country: { name: 'Ghana' }
@@ -197,7 +198,7 @@ export default function CreateBookingModal({ isOpen, onClose, onBookingCreated }
         {
           id: '5',
           title: 'Kakum Canopy Walk Adventure',
-          priceFrom: 20000, // 200 GHS in pesewas
+          priceFrom: 13, // 13 USD
           destination: {
             name: 'Kakum National Park',
             country: { name: 'Ghana' }

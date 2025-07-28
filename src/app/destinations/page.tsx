@@ -24,7 +24,8 @@ import {
   Loader2,
   AlertCircle
 } from 'lucide-react';
-import { cn, formatPrice } from '@/lib/utils';
+import { cn } from '@/lib/utils';
+import { formatPrice } from '@/lib/currency';
 import { useDestinations, transformDestinationForPage } from '@/hooks/useDestinations';
 import { DestinationsPageSkeletonGrid } from '@/components/ui/DestinationPageSkeleton';
 import { useFeaturedTours } from '@/hooks/useFeaturedTours';
@@ -477,7 +478,7 @@ export default function DestinationsPage() {
                         <div>
                           <p className="text-sm text-gray-500">From</p>
                           <p className="text-lg font-bold text-gray-900">
-                            GH₵{formatPrice(destination.priceFrom)}
+                            {formatPrice(destination.priceFrom)}
                           </p>
                         </div>
                         <Link
@@ -604,7 +605,7 @@ export default function DestinationsPage() {
                         <div>
                           <p className="text-sm text-gray-500">From</p>
                           <p className="text-lg font-bold text-gray-900">
-                            GH₵{formatPrice(destination.priceFrom)}
+                            {formatPrice(destination.priceFrom)}
                           </p>
                         </div>
                         <Link

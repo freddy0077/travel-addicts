@@ -1,20 +1,28 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { CreditCard, Loader, CheckCircle, XCircle } from 'lucide-react';
+import { CreditCard, Loader, CheckCircle, XCircle, DollarSign, RefreshCw } from 'lucide-react';
 import usePaystack from '@/hooks/usePaystack';
+import { 
+  formatPrice, 
+  formatPriceWithConversionSync, 
+  preparePaymentConversion, 
+  preparePaymentConversionSync,
+  getExchangeRateStatus 
+} from '@/lib/currency';
+import { convertGhsToKobo } from '@/hooks/usePaystack';
 
 interface PaystackPaymentProps {
   email: string;
-  amount: number; // Amount in pesewas
+  amount: number; // Amount in USD
   currency?: string;
   onSuccess: (reference: string, verificationData: any) => void;
   onError: (error: string) => void;
   onClose?: () => void;
-  metadata?: any;
-  disabled?: boolean;
+  metadata?: Record<string, any>;
   buttonText?: string;
   className?: string;
+  disabled?: boolean;
 }
 
 declare global {
@@ -31,13 +39,42 @@ export default function PaystackPayment({
   onError,
   onClose,
   metadata,
-  disabled = false,
   buttonText = 'Pay Now',
-  className = ''
+  className = '',
+  disabled = false
 }: PaystackPaymentProps) {
-  const { initializePayment, verifyPayment, convertPesewasToKobo, generateReference, isLoading, error } = usePaystack();
+  const { initializePayment, verifyPayment, convertGhsToKobo, generateReference, isLoading, error } = usePaystack();
   const [isPaystackLoaded, setIsPaystackLoaded] = useState(false);
   const [paymentStatus, setPaymentStatus] = useState<'idle' | 'initializing' | 'processing' | 'verifying' | 'success' | 'error'>('idle');
+  const [paymentConversion, setPaymentConversion] = useState(preparePaymentConversionSync(amount));
+  const [isLoadingRates, setIsLoadingRates] = useState(false);
+  const [rateStatus, setRateStatus] = useState(getExchangeRateStatus());
+
+  // Load live exchange rates on component mount
+  useEffect(() => {
+    loadLiveRates();
+  }, [amount]);
+
+  const loadLiveRates = async () => {
+    setIsLoadingRates(true);
+    try {
+      const liveConversion = await preparePaymentConversion(amount);
+      setPaymentConversion(liveConversion);
+      setRateStatus(getExchangeRateStatus());
+    } catch (error) {
+      console.error('Failed to load live rates:', error);
+      // Keep using sync conversion as fallback
+    } finally {
+      setIsLoadingRates(false);
+    }
+  };
+
+  const refreshRates = () => {
+    loadLiveRates();
+  };
+
+  // Calculate conversion details
+  const amountInKobo = convertGhsToKobo(paymentConversion.paymentAmount);
 
   // Load Paystack Inline script
   useEffect(() => {
@@ -106,14 +143,12 @@ export default function PaystackPayment({
       // Generate unique reference
       const reference = generateReference();
       
-      // Convert amount to kobo for Paystack
-      const amountInKobo = convertPesewasToKobo(amount);
-      
       console.log('💰 Payment details:', {
         email,
-        amount: amountInKobo,
+        amount: paymentConversion.paymentAmount,
         currency,
-        reference
+        reference,
+        conversionInfo: paymentConversion.conversionInfo
       });
 
       // Initialize payment with backend
@@ -225,6 +260,40 @@ export default function PaystackPayment({
 
   return (
     <div className={`paystack-payment ${className}`}>
+      {/* Exchange Rate Information */}
+      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+        <div className="flex items-center justify-between mb-2">
+          <div className="flex items-center space-x-2">
+            <DollarSign className="h-4 w-4 text-blue-600" />
+            <span className="text-sm font-medium text-blue-900">Exchange Rate</span>
+            {isLoadingRates && <Loader className="h-3 w-3 animate-spin text-blue-600" />}
+          </div>
+          <button
+            onClick={refreshRates}
+            disabled={isLoadingRates}
+            className="flex items-center space-x-1 text-xs text-blue-600 hover:text-blue-800 disabled:opacity-50"
+          >
+            <RefreshCw className={`h-3 w-3 ${isLoadingRates ? 'animate-spin' : ''}`} />
+            <span>Refresh</span>
+          </button>
+        </div>
+        
+        <div className="text-sm text-blue-800">
+          <div className="font-medium">{paymentConversion.conversionInfo}</div>
+          <div className="text-xs text-blue-600 mt-1">
+            {rateStatus.cached ? (
+              <>
+                {rateStatus.apiEnabled ? '🟢 Live rates' : '🟡 Fallback rates'} • 
+                Updated: {rateStatus.lastUpdated?.toLocaleTimeString()} • 
+                Expires in: {Math.floor((rateStatus.expiresIn || 0) / 60)}m
+              </>
+            ) : (
+              <>🟡 Using fallback rates • {rateStatus.apiEnabled ? 'Loading live rates...' : 'API key not configured'}</>
+            )}
+          </div>
+        </div>
+      </div>
+
       <button
         onClick={handlePayment}
         disabled={isButtonDisabled}
@@ -242,6 +311,12 @@ export default function PaystackPayment({
       {!isPaystackLoaded && (
         <div className="mt-2 text-sm text-neutral-500">
           Loading payment system...
+        </div>
+      )}
+      
+      {paymentConversion.conversionInfo && (
+        <div className="mt-2 text-sm text-neutral-500">
+          {paymentConversion.conversionInfo}
         </div>
       )}
     </div>

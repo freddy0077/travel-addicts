@@ -1,5 +1,4 @@
 import { FeaturedTour } from '@/hooks/useFeaturedTours';
-import { convertPesewasToCedis } from '@/lib/graphql-client';
 
 // Transform API tour data to match home page format
 export interface HomeTour {
@@ -29,8 +28,8 @@ export function transformFeaturedTourForHome(tour: FeaturedTour): HomeTour {
     ? tour.images[0] 
     : null;
 
-  // Convert price from pesewas to cedis
-  const priceInCedis = convertPesewasToCedis(tour.priceFrom);
+  // Price is already in cedis - no conversion needed
+  const priceInCedis = tour.priceFrom;
 
   return {
     id: tour.id,

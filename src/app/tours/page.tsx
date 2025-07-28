@@ -9,7 +9,7 @@ import TourCard from '@/components/ui/TourCard'
 import TourCardSkeleton from '@/components/ui/TourCardSkeleton'
 import AfricanHero from '@/components/ui/AfricanHero'
 import { useSearchTours, useSearchFilters, SearchFilters } from '@/hooks/useSearch'
-import { formatPrice } from '@/lib/graphql-client'
+import { formatPrice } from '@/lib/currency'
 import { cn } from '@/lib/utils'
 
 function ToursPageContent() {
@@ -85,8 +85,8 @@ function ToursPageContent() {
       const min = parseInt(searchData.minPrice) || 0
       const max = parseInt(searchData.maxPrice) || 10000
       
-      newFilters.minPrice = min * 100 // Convert to pesewas
-      newFilters.maxPrice = max * 100 // Convert to pesewas
+      newFilters.minPrice = min // Already in USD
+      newFilters.maxPrice = max // Already in USD
     }
     
     if (searchData.duration && searchData.duration !== 'All') {
@@ -146,7 +146,7 @@ function ToursPageContent() {
     title: tour.title,
     destination: tour.destination.name,
     image: tour.images[0] || '/api/placeholder/400/300',
-    price: Math.round(tour.priceFrom / 100), // Convert from pesewas to cedis
+    price: tour.priceFrom, // Already in USD
     duration: tour.duration,
     groupSize: `Max ${tour.groupSizeMax}`,
     rating: tour.rating,
@@ -242,8 +242,8 @@ function ToursPageContent() {
                     value={
                       filters.minPrice && filters.maxPrice 
                         ? searchFiltersData.priceRanges.find(range => 
-                            range.min <= (filters.minPrice! / 100) && 
-                            range.max >= (filters.maxPrice! / 100)
+                            range.min <= filters.minPrice! && 
+                            range.max >= filters.maxPrice!
                           )?.label || 'All'
                         : 'All'
                     }
@@ -255,8 +255,8 @@ function ToursPageContent() {
                         if (range) {
                           setFilters(prev => ({ 
                             ...prev, 
-                            minPrice: range.min * 100, 
-                            maxPrice: range.max * 100 
+                            minPrice: range.min, 
+                            maxPrice: range.max 
                           }))
                         }
                       }

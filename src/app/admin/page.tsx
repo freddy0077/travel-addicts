@@ -24,7 +24,8 @@ import {
   PieChart,
   Target
 } from 'lucide-react';
-import { graphqlClient, formatPrice } from '@/lib/graphql-client';
+import { graphqlClient } from '@/lib/graphql-client';
+import { formatPrice } from '@/lib/currency';
 
 interface DashboardStats {
   totalBookings: number;
@@ -205,7 +206,7 @@ export default function AdminDashboard() {
           subtitle: `${booking.tour?.title} - ${booking.customerName}`,
           time: formatTimeAgo(booking.createdAt),
           status: booking.status.toLowerCase(),
-          amount: booking.totalPrice / 100 // Convert from pesewas to cedis
+          amount: booking.totalPrice // Already in USD
         })) || [];
 
         setRecentActivity(recentBookingsActivity);
@@ -215,7 +216,7 @@ export default function AdminDashboard() {
           id: dest.id,
           name: dest.name,
           bookings: dest.bookings,
-          revenue: dest.revenue / 100, // Convert from pesewas to cedis
+          revenue: dest.revenue, // Already in USD
           growth: dest.growth
         })) || [];
 

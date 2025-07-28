@@ -11,37 +11,40 @@ import {
   Shield, 
   Compass,
   Camera,
-  Plane
+  Plane,
+  Music,
+  Mic,
+  Calendar
 } from 'lucide-react';
 import { BRAND } from '@/lib/brand';
 
 const stats = [
+  { icon: Calendar, label: 'Founded', value: '2016' },
   { icon: Globe, label: 'Countries Covered', value: BRAND.stats.destinations },
   { icon: Users, label: 'Happy Travelers', value: BRAND.stats.happyTravelers },
-  { icon: Award, label: 'Awards Won', value: BRAND.stats.awards },
   { icon: Star, label: 'Average Rating', value: BRAND.stats.averageRating },
 ];
 
 const values = [
   {
-    icon: Heart,
-    title: 'Passion for Travel',
-    description: 'We believe travel transforms lives and creates lasting memories that enrich the human experience.'
+    icon: Music,
+    title: 'Cultural Bridge',
+    description: 'Connecting the world of tourism with the soul of African art through music and storytelling.'
   },
   {
-    icon: Shield,
-    title: 'Trust & Safety',
-    description: 'Your safety and peace of mind are our top priorities. We partner only with trusted local operators.'
+    icon: Heart,
+    title: 'Meaningful Experiences',
+    description: 'We believe travel is about meaningful experiences, genuine connections, and unforgettable moments.'
   },
   {
     icon: Compass,
-    title: 'Expert Guidance',
-    description: 'Our travel experts have firsthand knowledge of every destination we offer, ensuring authentic experiences.'
+    title: 'Expert Curation',
+    description: 'Over a decade of entertainment industry experience brings unique perspective to travel curation.'
   },
   {
-    icon: Globe,
-    title: 'Sustainable Tourism',
-    description: 'We are committed to responsible travel that benefits local communities and preserves natural beauty.'
+    icon: Shield,
+    title: 'Licensed & Trusted',
+    description: 'Fully licensed and registered travel company in Ghana, collaborating with local and international organizations.'
   },
 ];
 
@@ -64,16 +67,16 @@ export default function AboutPage() {
                 About {BRAND.name}
               </h1>
               <p className="text-xl md:text-2xl text-blue-100 mb-8 leading-relaxed">
-                We're passionate travelers who believe that extraordinary journeys create extraordinary memories. 
-                Since 2018, we've been crafting luxury travel experiences that go beyond the ordinary.
+                Founded by Ghanaian musician and cultural ambassador Eric Listowell (Mula Gad), 
+                Travel Addicts bridges the world of tourism and the soul of African art.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <button className="bg-white text-primary-600 px-8 py-4 rounded-xl font-semibold hover:bg-gray-100 transition-colors">
+                <a href="#story" className="bg-white text-primary-600 px-8 py-4 rounded-xl font-semibold hover:bg-gray-100 transition-colors text-center">
                   Our Story
-                </button>
-                <button className="border-2 border-white text-white px-8 py-4 rounded-xl font-semibold hover:bg-white hover:text-primary-600 transition-colors">
-                  Meet the Team
-                </button>
+                </a>
+                <a href="#vision-mission" className="border-2 border-white text-white px-8 py-4 rounded-xl font-semibold hover:bg-white hover:text-primary-600 transition-colors text-center">
+                  Vision & Mission
+                </a>
               </div>
             </motion.div>
             
@@ -86,8 +89,9 @@ export default function AboutPage() {
               <div className="relative h-96 rounded-3xl overflow-hidden shadow-2xl">
                 <div className="bg-gradient-to-br from-orange-400 to-red-600 h-full flex items-center justify-center">
                   <div className="text-white text-center">
-                    <h3 className="text-2xl font-bold mb-2">Our Story</h3>
-                    <p className="text-orange-100">Building unforgettable travel experiences</p>
+                    <Music className="w-16 h-16 mx-auto mb-4" />
+                    <h3 className="text-2xl font-bold mb-2">Music Meets Travel</h3>
+                    <p className="text-orange-100">Where culture, music, and adventure unite</p>
                   </div>
                 </div>
               </div>
@@ -95,11 +99,23 @@ export default function AboutPage() {
               <div className="absolute -top-6 -right-6 bg-white/90 backdrop-blur-sm rounded-2xl p-4 shadow-large">
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center">
-                    <Plane className="w-6 h-6 text-primary-600" />
+                    <Mic className="w-6 h-6 text-primary-600" />
                   </div>
                   <div>
-                    <div className="font-bold text-gray-900">{BRAND.stats.destinations}</div>
-                    <div className="text-sm text-gray-600">Destinations</div>
+                    <p className="font-semibold text-gray-900">Mula Gad</p>
+                    <p className="text-sm text-gray-600">Founder</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="absolute -bottom-6 -left-6 bg-white/90 backdrop-blur-sm rounded-2xl p-4 shadow-large">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 bg-secondary-100 rounded-full flex items-center justify-center">
+                    <Calendar className="w-6 h-6 text-secondary-600" />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-gray-900">Since 2016</p>
+                    <p className="text-sm text-gray-600">Licensed & Trusted</p>
                   </div>
                 </div>
               </div>
@@ -108,196 +124,256 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        {/* Stats Section */}
-        <motion.section
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-20"
-        >
+      {/* Stats Section */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
               <motion.div
                 key={stat.label}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="text-center bg-white rounded-2xl p-6 shadow-soft hover:shadow-medium transition-all duration-300"
+                className="text-center"
               >
-                <div className="w-16 h-16 bg-primary-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                  <stat.icon className="w-8 h-8 text-primary-600" />
+                <div className="w-16 h-16 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <stat.icon className="w-8 h-8 text-white" />
                 </div>
                 <div className="text-3xl font-bold text-gray-900 mb-2">{stat.value}</div>
                 <div className="text-gray-600">{stat.label}</div>
               </motion.div>
             ))}
           </div>
-        </motion.section>
+        </div>
+      </section>
 
-        {/* Our Story Section */}
-        <motion.section
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-20"
-        >
+      {/* Our Story Section */}
+      <section id="story" className="py-20 bg-gradient-to-br from-gray-50 to-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              className="text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-6"
+            >
+              Our Story
+            </motion.h2>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="text-xl text-gray-600 max-w-3xl mx-auto"
+            >
+              From global stages to curating unforgettable travel experiences
+            </motion.p>
+          </div>
+
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-4xl font-serif font-bold text-gray-900 mb-6">Our Story</h2>
-              <div className="space-y-6 text-gray-700 leading-relaxed">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              className="space-y-6"
+            >
+              <div className="prose prose-lg text-gray-700">
                 <p>
-                  {BRAND.about}
+                  Founded by Ghanaian musician, songwriter, and performer <strong>Eric Listowell</strong> — 
+                  popularly known as <strong>Mula Gad</strong> — Travel Addicts was born from a passion for 
+                  hosting, storytelling, and sharing the vibrant culture of Ghana with the world.
                 </p>
+                
                 <p>
-                  Founded in {BRAND.foundedYear}, Travel Addicts has grown from a small team of passionate 
-                  travel enthusiasts to a recognized leader in creating exceptional travel experiences. 
-                  Our commitment to excellence, attention to detail, and genuine care for our clients 
-                  has earned us the trust of thousands of travelers worldwide.
+                  As a cultural ambassador and tourism advocate with over a decade of experience in the 
+                  entertainment industry, Mula Gad combined his love for music, culture, and hospitality 
+                  to create unique travel experiences that bridge the world of tourism and the soul of African art.
                 </p>
+                
                 <p>
-                  Every journey we craft is designed to inspire, educate, and create lasting memories. 
-                  From cultural immersion tours to exotic getaways, we believe that travel has the power 
-                  to transform lives and broaden perspectives.
+                  His journey — from performing on global stages to curating unforgettable events for fans 
+                  and guests — revealed the powerful connection between music, culture, and travel.
+                </p>
+                
+                <p>
+                  In <strong>2016</strong>, that vision gave birth to Travel Addicts — now a fully licensed 
+                  and registered travel and tour company in Ghana. Since its inception, Travel Addicts has 
+                  grown into a trusted and reliable brand, proudly collaborating with local and international 
+                  organizations to deliver world-class travel experiences.
                 </p>
               </div>
-            </div>
-            <div className="relative">
-              <div className="relative h-80 rounded-2xl overflow-hidden shadow-soft">
-                <div className="bg-gradient-to-br from-blue-400 to-purple-600 h-full flex items-center justify-center">
-                  <div className="text-white text-center">
-                    <h3 className="text-2xl font-bold mb-2">Our Mission</h3>
-                    <p className="text-blue-100">Creating meaningful travel connections</p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.2 }}
+              className="relative"
+            >
+              <div className="relative h-96 rounded-3xl overflow-hidden shadow-2xl">
+                <div className="bg-gradient-to-br from-primary-500 to-secondary-600 h-full flex items-center justify-center">
+                  <div className="text-white text-center p-8">
+                    <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                      <Music className="w-10 h-10" />
+                    </div>
+                    <h3 className="text-2xl font-bold mb-4">Eric Listowell</h3>
+                    <p className="text-lg mb-2">Mula Gad</p>
+                    <p className="text-primary-100">Founder & Cultural Ambassador</p>
                   </div>
                 </div>
               </div>
-              <div className="absolute -bottom-6 -left-6 bg-white rounded-2xl p-6 shadow-large">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-secondary-100 rounded-full flex items-center justify-center">
-                    <Camera className="w-6 h-6 text-secondary-600" />
-                  </div>
-                  <div>
-                    <div className="font-bold text-gray-900">Since 2018</div>
-                    <div className="text-sm text-gray-600">Creating memories</div>
-                  </div>
-                </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Philosophy Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              className="text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-6"
+            >
+              Our Philosophy
+            </motion.h2>
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="max-w-4xl mx-auto text-center mb-16"
+          >
+            <div className="bg-gradient-to-r from-primary-50 to-secondary-50 rounded-3xl p-8 md:p-12">
+              <div className="prose prose-xl text-gray-700 mx-auto">
+                <p className="text-2xl font-medium leading-relaxed">
+                  At Travel Addicts, we believe travel is more than just visiting destinations — 
+                  it's about <span className="text-primary-600 font-semibold">meaningful experiences</span>, 
+                  <span className="text-secondary-600 font-semibold"> genuine connections</span>, and 
+                  <span className="text-accent-600 font-semibold"> unforgettable moments</span>.
+                </p>
+                
+                <p className="text-lg mt-6">
+                  Our dedicated team is committed to offering seamless cultural tours, exotic getaways, 
+                  group expeditions, and custom-designed adventures, all crafted with care, professionalism, 
+                  and a true love for discovery.
+                </p>
+                
+                <p className="text-lg mt-4">
+                  Whether you're seeking an authentic local Ghanaian or international experience or a 
+                  grand African adventure, Travel Addicts is your trusted partner in exploration.
+                </p>
+                
+                <p className="text-xl font-semibold text-primary-600 mt-8">
+                  Your journey begins with us. Welcome to the adventure.
+                </p>
               </div>
             </div>
-          </div>
-        </motion.section>
+          </motion.div>
 
-        {/* Mission & Vision Section */}
-        <motion.section
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-20"
-        >
-          <div className="grid lg:grid-cols-2 gap-12">
-            {/* Mission */}
-            <div className="bg-gradient-to-br from-primary-50 to-secondary-50 rounded-3xl p-8 lg:p-12">
-              <div className="flex items-center mb-6">
-                <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-2xl flex items-center justify-center mr-4">
-                  <Heart className="w-6 h-6 text-white" />
-                </div>
-                <h2 className="text-3xl font-serif font-bold text-gray-900">Our Mission</h2>
-              </div>
-              <p className="text-gray-700 leading-relaxed text-lg">
-                {BRAND.mission}
-              </p>
-            </div>
-
-            {/* Vision */}
-            <div className="bg-gradient-to-br from-accent-50 to-primary-50 rounded-3xl p-8 lg:p-12">
-              <div className="flex items-center mb-6">
-                <div className="w-12 h-12 bg-gradient-to-br from-accent-500 to-primary-500 rounded-2xl flex items-center justify-center mr-4">
-                  <Compass className="w-6 h-6 text-white" />
-                </div>
-                <h2 className="text-3xl font-serif font-bold text-gray-900">Our Vision</h2>
-              </div>
-              <p className="text-gray-700 leading-relaxed text-lg">
-                {BRAND.vision}
-              </p>
-            </div>
-          </div>
-        </motion.section>
-
-        {/* Values Section */}
-        <motion.section
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-20"
-        >
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-serif font-bold text-gray-900 mb-4">Our Values</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              These core principles guide everything we do, from planning your itinerary to 
-              supporting you throughout your journey.
-            </p>
-          </div>
-          
+          {/* Values Grid */}
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {values.map((value, index) => (
               <motion.div
                 key={value.title}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="text-center bg-white rounded-2xl p-8 shadow-soft hover:shadow-medium transition-all duration-300"
+                className="bg-white rounded-2xl p-6 shadow-large hover:shadow-xl transition-shadow border border-gray-100"
               >
-                <div className="w-16 h-16 bg-gradient-to-br from-primary-100 to-secondary-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                  <value.icon className="w-8 h-8 text-primary-600" />
+                <div className="w-12 h-12 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-xl flex items-center justify-center mb-4">
+                  <value.icon className="w-6 h-6 text-white" />
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-4">{value.title}</h3>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">{value.title}</h3>
                 <p className="text-gray-600 leading-relaxed">{value.description}</p>
               </motion.div>
             ))}
           </div>
-        </motion.section>
+        </div>
+      </section>
 
-        {/* Timeline Section */}
-        <motion.section
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-20"
-        >
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-serif font-bold text-gray-900 mb-4">Our Journey</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              From a small startup to a leading luxury travel company, here are the key 
-              milestones in our journey.
+      {/* Vision & Mission Section */}
+      <section id="vision-mission" className="py-20 bg-gradient-to-br from-primary-50 via-white to-secondary-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              className="text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-6"
+            >
+              Vision & Mission
+            </motion.h2>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-12">
+            {/* Mission */}
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              className="bg-white rounded-3xl p-8 md:p-12 shadow-large"
+            >
+              <div className="w-16 h-16 bg-gradient-to-r from-primary-500 to-primary-600 rounded-2xl flex items-center justify-center mb-6">
+                <Compass className="w-8 h-8 text-white" />
+              </div>
+              <h3 className="text-3xl font-serif font-bold text-gray-900 mb-6">Our Mission</h3>
+              <p className="text-lg text-gray-700 leading-relaxed">
+                At Travel Addicts, our mission is to connect people to unforgettable experiences by 
+                providing exceptional travel and tourism services with passion, integrity, and 
+                personalized care. We are committed to delivering seamless adventures that inspire, 
+                educate, and create lasting memories — making every journey with us a truly remarkable one.
+              </p>
+            </motion.div>
+
+            {/* Vision */}
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.2 }}
+              className="bg-white rounded-3xl p-8 md:p-12 shadow-large"
+            >
+              <div className="w-16 h-16 bg-gradient-to-r from-secondary-500 to-secondary-600 rounded-2xl flex items-center justify-center mb-6">
+                <Globe className="w-8 h-8 text-white" />
+              </div>
+              <h3 className="text-3xl font-serif font-bold text-gray-900 mb-6">Our Vision</h3>
+              <p className="text-lg text-gray-700 leading-relaxed">
+                To become a leading travel and tourism brand recognized for redefining the travel 
+                experience — connecting people to the world through authentic adventures, exceptional 
+                service, and a commitment to creating meaningful, lasting memories across destinations.
+              </p>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Call to Action */}
+      <section className="py-20 bg-gradient-to-r from-primary-600 via-secondary-500 to-accent-500 text-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+          >
+            <h2 className="text-4xl md:text-5xl font-serif font-bold mb-6">
+              Ready for Your Next Adventure?
+            </h2>
+            <p className="text-xl text-blue-100 mb-8 leading-relaxed">
+              Let Travel Addicts craft your perfect journey. From cultural immersion to luxury getaways, 
+              we're here to make your travel dreams come true.
             </p>
-          </div>
-        </motion.section>
-
-        {/* CTA Section */}
-        <motion.section
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="bg-gradient-to-r from-primary-500 to-secondary-500 rounded-3xl p-8 md:p-12 text-center text-white"
-        >
-          <h2 className="text-3xl md:text-4xl font-serif font-bold mb-4">
-            Ready to Start Your Journey?
-          </h2>
-          <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-            Let us create an unforgettable travel experience tailored just for you. 
-            Get in touch with our travel experts today.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-white text-primary-600 px-8 py-4 rounded-xl font-semibold hover:bg-gray-100 transition-colors">
-              Plan My Trip
-            </button>
-            <button className="border-2 border-white text-white px-8 py-4 rounded-xl font-semibold hover:bg-white hover:text-primary-600 transition-colors">
-              Contact Us
-            </button>
-          </div>
-        </motion.section>
-      </div>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <a 
+                href="/tours" 
+                className="bg-white text-primary-600 px-8 py-4 rounded-xl font-semibold hover:bg-gray-100 transition-colors"
+              >
+                Explore Tours
+              </a>
+              <a 
+                href="/contact" 
+                className="border-2 border-white text-white px-8 py-4 rounded-xl font-semibold hover:bg-white hover:text-primary-600 transition-colors"
+              >
+                Contact Us
+              </a>
+            </div>
+          </motion.div>
+        </div>
+      </section>
     </div>
   );
 }

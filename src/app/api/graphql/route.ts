@@ -49,7 +49,7 @@ const { handleRequest } = createYoga({
             continent: 'Africa',
             description: 'Experience the great migration in Tanzania\'s most famous national park.',
             image: '/images/destinations/serengeti-migration.jpg',
-            priceFrom: 250000, // 2500 GHS in pesewas
+            priceFrom: 160, // 160 USD
             rating: 4.8,
             reviewCount: 156,
             tourCount: 12
@@ -61,7 +61,7 @@ const { handleRequest } = createYoga({
             continent: 'Africa',
             description: 'Discover the beauty of Table Mountain and vibrant city life.',
             image: '/images/destinations/cape-town-table-mountain.jpg',
-            priceFrom: 180000, // 1800 GHS in pesewas
+            priceFrom: 115, // 115 USD
             rating: 4.7,
             reviewCount: 203,
             tourCount: 8
@@ -73,8 +73,8 @@ const { handleRequest } = createYoga({
             title: 'Serengeti Safari Adventure',
             slug: 'serengeti-safari-adventure',
             description: 'An unforgettable 7-day safari experience in the Serengeti.',
-            price: 350000, // 3500 GHS in pesewas
-            originalPrice: 400000,
+            price: 225, // 225 USD
+            originalPrice: 260,
             duration: 7,
             groupSize: 12,
             rating: 4.9,
@@ -90,7 +90,7 @@ const { handleRequest } = createYoga({
               continent: 'Africa',
               description: 'Experience the great migration in Tanzania\'s most famous national park.',
               image: '/images/destinations/serengeti-migration.jpg',
-              priceFrom: 250000,
+              priceFrom: 160,
               rating: 4.8,
               reviewCount: 156,
               tourCount: 12

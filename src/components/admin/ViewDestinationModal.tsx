@@ -3,7 +3,7 @@
 import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { X, MapPin, Star, Calendar, Clock, Thermometer, Activity, Image as ImageIcon } from 'lucide-react';
-import { formatPrice } from '@/lib/graphql-client';
+import { formatPrice } from '@/lib/currency';
 
 interface Destination {
   id: string;

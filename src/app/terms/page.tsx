@@ -78,7 +78,7 @@ export default function TermsPage() {
 
               <h3 className="text-xl font-semibold text-gray-700 mb-3">3.2 Payment Terms</h3>
               <ul className="text-gray-600 leading-relaxed space-y-2 mb-4">
-                <li>• All prices are quoted in Ghanaian Cedis (GH₵) unless otherwise stated</li>
+                <li>• All prices are quoted in US Dollars (USD) unless otherwise stated</li>
                 <li>• Payment is required at the time of booking unless otherwise agreed</li>
                 <li>• We accept payments via Paystack, including mobile money, bank transfers, and cards</li>
                 <li>• Group bookings may require a deposit with balance due before departure</li>
