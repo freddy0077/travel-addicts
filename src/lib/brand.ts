@@ -16,9 +16,9 @@ export const BRAND = {
   about: "At Travel Addicts, we believe travel is more than just a destination — it's an experience. As a passionate travel and tourism company, we are dedicated to creating unforgettable journeys through exceptional service, attention to detail, and a deep love for adventure. Whether it's cultural tours, exotic getaways, group expeditions, or tailored travel experiences, our team goes the extra mile to deliver seamless, memorable moments for every client. With Travel Addicts, your next adventure comes with the promise of professionalism, care, and the joy of discovery.",
   
   // Contact Information
-  email: process.env.NEXT_PUBLIC_COMPANY_EMAIL || "hello@traveladdicts.com",
-  phone: process.env.NEXT_PUBLIC_COMPANY_PHONE || "+233 123 456 789",
-  address: process.env.NEXT_PUBLIC_COMPANY_ADDRESS || "Accra, Ghana",
+  email: process.env.NEXT_PUBLIC_COMPANY_EMAIL || "bookings@traveladdicts.org",
+  phone: process.env.NEXT_PUBLIC_COMPANY_PHONE || "+233 59 387 8403",
+  address: process.env.NEXT_PUBLIC_COMPANY_ADDRESS || "Kumsark estates, Oyarifa, Accra - Ghana",
   
   // Social Media
   social: {

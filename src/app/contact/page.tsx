@@ -21,19 +21,19 @@ const contactInfo = [
   {
     icon: Phone,
     title: 'Phone',
-    details: [BRAND.phone, '+233 123 456 790'],
+    details: [BRAND.phone],
     description: 'Mon-Fri 8AM-6PM GMT'
   },
   {
     icon: Mail,
     title: 'Email',
-    details: [BRAND.email, 'support@traveladdicts.com'],
+    details: [BRAND.email],
     description: 'We respond within 24 hours'
   },
   {
     icon: MapPin,
     title: 'Office',
-    details: [BRAND.address, 'Ghana'],
+    details: [BRAND.address],
     description: 'Visit us by appointment'
   },
   {
