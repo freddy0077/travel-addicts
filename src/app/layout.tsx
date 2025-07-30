@@ -3,6 +3,7 @@ import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import ConditionalLayout from "@/components/layout/ConditionalLayout";
 import { getSEOTitle, getSEODescription, BRAND } from "@/lib/brand";
+import { ApolloWrapper } from '@/lib/ApolloWrapper';
 
 const inter = Inter({
   subsets: ["latin"],
@@ -73,9 +74,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
       <body className="antialiased">
-        <ConditionalLayout>
-          {children}
-        </ConditionalLayout>
+        <ApolloWrapper>
+          <ConditionalLayout>
+            {children}
+          </ConditionalLayout>
+        </ApolloWrapper>
       </body>
     </html>
   );

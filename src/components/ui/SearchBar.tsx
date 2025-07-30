@@ -2,9 +2,9 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Search, MapPin, Calendar, Users, Sparkles, Filter } from 'lucide-react'
+import { Search, MapPin, Calendar, Users, Sparkles, Edit } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import AdvancedSearchModal from './AdvancedSearchModal'
+import CustomBookingModal from './CustomBookingModal'
 import DestinationAutocomplete from './DestinationAutocomplete'
 import { SearchFilters } from '@/hooks/useSearch'
 
@@ -20,7 +20,7 @@ export default function SearchBar({ className, variant = 'hero', onSearch }: Sea
   const [endDate, setEndDate] = useState('')
   const [adults, setAdults] = useState(2)
   const [children, setChildren] = useState(0)
-  const [isAdvancedSearchModalOpen, setIsAdvancedSearchModalOpen] = useState(false)
+  const [isCustomBookingModalOpen, setIsCustomBookingModalOpen] = useState(false)
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -34,12 +34,6 @@ export default function SearchBar({ className, variant = 'hero', onSearch }: Sea
     }
     
     console.log('SearchBar search data:', searchData)
-    if (onSearch) {
-      onSearch(searchData)
-    }
-  }
-
-  const handleAdvancedSearch = (searchData: SearchFilters) => {
     if (onSearch) {
       onSearch(searchData)
     }
@@ -279,24 +273,23 @@ export default function SearchBar({ className, variant = 'hero', onSearch }: Sea
               type="button"
               whileHover={{ scale: 1.02, y: -2 }}
               whileTap={{ scale: 0.98 }}
-              onClick={() => setIsAdvancedSearchModalOpen(true)}
+              onClick={() => setIsCustomBookingModalOpen(true)}
               className="relative group overflow-hidden"
             >
               <div className="absolute inset-0 bg-white/80 backdrop-blur-sm border border-white/30 rounded-xl" />
               <div className="absolute inset-0 bg-gradient-to-r from-primary-50 to-secondary-50 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               <div className="relative flex items-center justify-center space-x-2 px-6 py-4 text-neutral-700 font-semibold">
-                <Filter className="w-4 h-4" />
-                <span>Advanced</span>
+                <Edit className="w-4 h-4" />
+                <span>Request Custom Trip</span>
               </div>
             </motion.button>
           </motion.div>
         </form>
       </div>
 
-      <AdvancedSearchModal
-        isOpen={isAdvancedSearchModalOpen}
-        onClose={() => setIsAdvancedSearchModalOpen(false)}
-        onSearch={handleAdvancedSearch}
+      <CustomBookingModal
+        isOpen={isCustomBookingModalOpen}
+        onClose={() => setIsCustomBookingModalOpen(false)}
       />
     </motion.div>
   )

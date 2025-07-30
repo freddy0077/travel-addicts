@@ -1,7 +1,22 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { X, Upload, MapPin, DollarSign, Star, Globe, Calendar, Camera, Sparkles, Plus, Minus, Users, Clock, Mountain } from 'lucide-react';
+import {
+  X,
+  Upload,
+  MapPin,
+  DollarSign,
+  Globe,
+  Calendar,
+  Camera,
+  Sparkles,
+  Plus,
+  Minus,
+  Users,
+  Clock,
+  Mountain,
+  Star
+} from 'lucide-react';
 import { graphqlClient, CREATE_TOUR_MUTATION, DESTINATIONS_QUERY } from '@/lib/graphql-client';
 import MediaUpload from '@/components/ui/MediaUpload';
 
@@ -394,7 +409,7 @@ export default function AddTourModal({ isOpen, onClose, onTourAdded }: AddTourMo
                 <div>
                   <label className="flex items-center text-sm font-semibold text-gray-700 mb-3">
                     <DollarSign className="h-4 w-4 mr-2 text-primary-500" />
-                    Price From (GHS) *
+                    Price From ($) *
                   </label>
                   <input
                     type="number"

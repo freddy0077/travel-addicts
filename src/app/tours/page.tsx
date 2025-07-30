@@ -148,7 +148,7 @@ function ToursPageContent() {
     image: tour.images[0] || '/api/placeholder/400/300',
     price: tour.priceFrom, // Already in USD
     duration: tour.duration,
-    groupSize: `Max ${tour.groupSizeMax}`,
+    // groupSize: `Max ${tour.groupSizeMax}`,
     rating: tour.rating,
     reviewCount: tour.reviewCount,
     highlights: tour.highlights.slice(0, 3),

@@ -349,7 +349,7 @@ export default function AddDestinationModal({ isOpen, onClose, onDestinationAdde
                       <div className="group">
                         <label className="block text-sm font-semibold text-gray-700 mb-3 flex items-center">
                           <DollarSign className="h-4 w-4 mr-2 text-green-500" />
-                          Price From (GHS) *
+                          Price From ($) *
                         </label>
                         <input
                           type="number"
