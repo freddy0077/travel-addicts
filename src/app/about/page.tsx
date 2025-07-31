@@ -243,26 +243,24 @@ export default function AboutPage() {
             className="max-w-4xl mx-auto text-center mb-16"
           >
             <div className="bg-gradient-to-r from-primary-50 to-secondary-50 rounded-3xl p-8 md:p-12">
-              <div className="prose prose-xl text-gray-700 mx-auto">
-                <p className="text-2xl font-medium leading-relaxed">
+              <div className="prose prose-xl mx-auto">
+                <p className="text-2xl font-serif font-medium leading-relaxed text-gray-700">
                   At Travel Addicts, we believe travel is more than just visiting destinations — 
-                  it's about <span className="text-primary-600 font-semibold">meaningful experiences</span>, 
-                  <span className="text-secondary-600 font-semibold"> genuine connections</span>, and 
-                  <span className="text-accent-600 font-semibold"> unforgettable moments</span>.
+                  it's about meaningful experiences, genuine connections, and unforgettable moments.
                 </p>
                 
-                <p className="text-lg mt-6">
+                <p className="text-lg font-serif mt-6 text-gray-700">
                   Our dedicated team is committed to offering seamless cultural tours, exotic getaways, 
                   group expeditions, and custom-designed adventures, all crafted with care, professionalism, 
                   and a true love for discovery.
                 </p>
                 
-                <p className="text-lg mt-4">
+                <p className="text-lg font-serif mt-4 text-gray-700">
                   Whether you're seeking an authentic local Ghanaian or international experience or a 
                   grand African adventure, Travel Addicts is your trusted partner in exploration.
                 </p>
                 
-                <p className="text-xl font-semibold text-primary-600 mt-8">
+                <p className="text-lg font-serif font-medium text-gray-700 mt-8">
                   Your journey begins with us. Welcome to the adventure.
                 </p>
               </div>

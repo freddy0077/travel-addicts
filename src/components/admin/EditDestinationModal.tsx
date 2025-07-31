@@ -4,7 +4,7 @@ import { Fragment, useState, useEffect } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { X, MapPin, Save, Loader2 } from 'lucide-react';
 import { graphqlClient, UPDATE_DESTINATION_MUTATION } from '@/lib/graphql-client';
-import { SingleImageUpload } from '@/components/ui/MediaUpload';
+import MediaUpload from '@/components/ui/MediaUpload'; // Fix import statement
 
 interface Destination {
   id: string;
@@ -47,6 +47,7 @@ export default function EditDestinationModal({
     name: '',
     description: '',
     mainImage: '',
+    gallery: [] as string[],
     priceFrom: 0,
     featured: false,
     type: '',
@@ -61,6 +62,7 @@ export default function EditDestinationModal({
   });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const [uploadKey, setUploadKey] = useState(0);
   const [activitiesInput, setActivitiesInput] = useState('');
   const [highlightsInput, setHighlightsInput] = useState('');
 
@@ -70,6 +72,7 @@ export default function EditDestinationModal({
         name: destination.name,
         description: destination.description,
         mainImage: destination.image,
+        gallery: destination.gallery || [],
         priceFrom: destination.priceFrom, // Already in cedis
         featured: destination.featured,
         type: destination.type,
@@ -100,6 +103,7 @@ export default function EditDestinationModal({
         name: formData.name,
         description: formData.description,
         image: formData.mainImage, // Map mainImage to image for backend
+        gallery: formData.gallery,
         priceFrom: formData.priceFrom, // Store price as entered (no conversion)
         featured: formData.featured,
         type: formData.type,
@@ -232,14 +236,49 @@ export default function EditDestinationModal({
 
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                          Main Image
+                          Destination Images
                         </label>
-                        <SingleImageUpload
-                          onImageSelect={(url) => setFormData(prev => ({ ...prev, mainImage: url }))}
-                          currentImage={formData.mainImage}
-                          folder="destination"
+                        <MediaUpload
+                          key={uploadKey}
+                          onUploadComplete={(mediaFile) => {
+                            // Add image to gallery array
+                            setFormData(prev => ({
+                              ...prev,
+                              gallery: [...prev.gallery, mediaFile.url],
+                              mainImage: prev.mainImage || mediaFile.url // Set as main image if no main image exists
+                            }));
+                            setUploadKey(uploadKey + 1);
+                          }}
+                          onUploadError={(error) => {
+                            setError(`Image upload failed: ${error}`);
+                          }}
+                          folder="destinations"
+                          accept="image/*"
+                          multiple={true}
+                          maxFiles={10}
+                          showPreview={true}
                           className="w-full"
                         />
+                        
+                        {/* Manual Gallery URLs Input */}
+                        <div className="mt-4">
+                          <label className="block text-sm font-medium text-gray-600 mb-1">
+                            Gallery Images (comma-separated URLs)
+                          </label>
+                          <textarea
+                            value={formData.gallery.join(', ')}
+                            onChange={(e) => setFormData(prev => ({ 
+                              ...prev, 
+                              gallery: e.target.value.split(',').map(url => url.trim()).filter(url => url) 
+                            }))}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                            rows={3}
+                            placeholder="https://example.com/image1.jpg, https://example.com/image2.jpg"
+                          />
+                          <p className="text-xs text-gray-500 mt-1">
+                            Enter multiple image URLs separated by commas, or use the upload above
+                          </p>
+                        </div>
                       </div>
 
                       <div className="grid grid-cols-2 gap-4">

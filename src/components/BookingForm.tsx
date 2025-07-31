@@ -79,7 +79,7 @@ export default function BookingForm({ tour, onBookingSuccess }: BookingFormProps
   // Payment information
   const [paymentReference, setPaymentReference] = useState<string | null>(null);
   const [paymentVerified, setPaymentVerified] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState<'online' | 'cash'>('online');
+  const [paymentMethod, setPaymentMethod] = useState<'online' | 'cash'>('cash'); 
   const [cashPaymentReceipt, setCashPaymentReceipt] = useState<File | null>(null);
 
   useEffect(() => {
@@ -156,16 +156,6 @@ export default function BookingForm({ tour, onBookingSuccess }: BookingFormProps
 
   // Handle form submission
   const handleSubmit = async () => {
-    if (paymentMethod === 'online' && !paymentVerified) {
-      alert('Please complete online payment before booking');
-      return;
-    }
-
-    if (paymentMethod === 'cash' && !cashPaymentReceipt) {
-      alert('Please upload your payment receipt before completing the booking');
-      return;
-    }
-
     try {
       // Calculate end date based on tour duration
       const startDate = new Date(selectedDate);
@@ -685,8 +675,9 @@ export default function BookingForm({ tour, onBookingSuccess }: BookingFormProps
               <label className="block text-sm font-medium text-neutral-700 mb-3">
                 Payment Method
               </label>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div 
+              <div className="grid grid-cols-1 gap-4">
+                {/* Online Payment - Commented out for now */}
+                {/* <div 
                   className={`border-2 rounded-lg p-4 cursor-pointer transition-all ${
                     paymentMethod === 'online' 
                       ? 'border-primary-500 bg-primary-50' 
@@ -709,29 +700,24 @@ export default function BookingForm({ tour, onBookingSuccess }: BookingFormProps
                       <p className="text-sm text-neutral-600">Pay securely with Paystack</p>
                     </div>
                   </div>
-                </div>
+                </div> */}
                 
                 <div 
-                  className={`border-2 rounded-lg p-4 cursor-pointer transition-all ${
-                    paymentMethod === 'cash' 
-                      ? 'border-primary-500 bg-primary-50' 
-                      : 'border-neutral-200 hover:border-neutral-300'
-                  }`}
-                  onClick={() => setPaymentMethod('cash')}
+                  className="border-2 border-primary-500 bg-primary-50 rounded-lg p-4"
                 >
                   <div className="flex items-center">
                     <input
                       type="radio"
                       name="paymentMethod"
                       value="cash"
-                      checked={paymentMethod === 'cash'}
-                      onChange={(e) => setPaymentMethod(e.target.value)}
+                      checked={true}
+                      readOnly
                       className="mr-3"
                     />
                     <Banknote className="w-5 h-5 mr-2 text-primary-600" />
                     <div>
                       <span className="font-medium text-neutral-900">Bank Transfer</span>
-                      <p className="text-sm text-neutral-600">Pay via bank transfer</p>
+                      <p className="text-sm text-neutral-600">Pay via bank transfer - We'll contact you with details</p>
                     </div>
                   </div>
                 </div>
@@ -809,57 +795,32 @@ export default function BookingForm({ tour, onBookingSuccess }: BookingFormProps
                   <div className="flex-1">
                     <h4 className="font-semibold text-blue-900 mb-3">Bank Transfer Payment Instructions</h4>
                     <p className="text-blue-800 mb-4">
-                      Please transfer the total amount of <strong>{formatPriceWithConversionSync(calculateTotalPrice())}</strong> to our bank account:
+                      Thank you for choosing bank transfer! Our team will contact you within 24 hours with complete payment details including:
                     </p>
                     
                     <div className="bg-white rounded-lg p-4 mb-4 border border-blue-200">
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        <div>
-                          <span className="text-sm font-medium text-neutral-600">Account Name:</span>
-                          <p className="font-semibold text-neutral-900">Travel Addicts Ghana Ltd</p>
-                        </div>
-                        <div>
-                          <span className="text-sm font-medium text-neutral-600">Account Number:</span>
-                          <p className="font-semibold text-neutral-900">1234567890</p>
-                        </div>
-                        <div>
-                          <span className="text-sm font-medium text-neutral-600">Bank Name:</span>
-                          <p className="font-semibold text-neutral-900">Ecobank Ghana</p>
-                        </div>
-                        <div>
-                          <span className="text-sm font-medium text-neutral-600">Branch:</span>
-                          <p className="font-semibold text-neutral-900">Accra Main Branch</p>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div className="mb-4">
-                      <p className="text-blue-800 font-medium mb-2">Important Notes:</p>
-                      <ul className="text-blue-700 text-sm space-y-1">
-                        <li>• Use your booking reference as the transfer description</li>
-                        <li>• Keep your payment receipt for verification</li>
-                        <li>• Upload a clear photo or scan of your receipt below</li>
-                        <li>• Your booking will be confirmed once payment is verified</li>
+                      <ul className="text-blue-700 text-sm space-y-2">
+                        <li>• Bank account details for the transfer</li>
+                        <li>• Total amount to be paid: <strong>{formatPriceWithConversionSync(calculateTotalPrice())}</strong></li>
+                        <li>• Your unique booking reference number</li>
+                        <li>• Payment instructions and timeline</li>
                       </ul>
                     </div>
                     
-                    <div>
-                      <label className="block text-sm font-medium text-blue-900 mb-2">
-                        Upload Payment Receipt *
-                      </label>
-                      <input
-                        type="file"
-                        accept=".pdf, .jpg, .jpeg, .png"
-                        onChange={(e) => setCashPaymentReceipt(e.target.files?.[0] || null)}
-                        className="w-full px-3 py-2 border border-blue-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
-                        required
-                      />
-                      {cashPaymentReceipt && (
-                        <p className="text-sm text-green-600 mt-2 flex items-center">
-                          <CheckCircle className="w-4 h-4 mr-1" />
-                          Receipt uploaded: {cashPaymentReceipt.name}
-                        </p>
-                      )}
+                    <div className="mb-4">
+                      <p className="text-blue-800 font-medium mb-2">What happens next:</p>
+                      <ul className="text-blue-700 text-sm space-y-1">
+                        <li>• We'll call or email you with payment details</li>
+                        <li>• Make the bank transfer using the provided details</li>
+                        <li>• Send us your payment confirmation</li>
+                        <li>• Your booking will be confirmed once payment is received</li>
+                      </ul>
+                    </div>
+                    
+                    <div className="bg-green-50 border border-green-200 rounded-lg p-3">
+                      <p className="text-green-800 text-sm">
+                        <strong>Contact:</strong> bookings@traveladdicts.org | +233 59 387 8403
+                      </p>
                     </div>
                   </div>
                 </div>

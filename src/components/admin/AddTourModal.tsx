@@ -130,10 +130,10 @@ export default function AddTourModal({ isOpen, onClose, onTourAdded }: AddTourMo
 
   const handleUploadComplete = (file: any) => {
     if (file && file.url) {
-      // Update the first image URL with the uploaded image
+      // Add the uploaded image to the images array
       setFormData(prev => ({
         ...prev,
-        images: [file.url, ...prev.images.slice(1)]
+        images: [...prev.images, file.url]
       }));
       
       // Force re-render of MediaUpload component for subsequent uploads
@@ -543,16 +543,19 @@ export default function AddTourModal({ isOpen, onClose, onTourAdded }: AddTourMo
                   
                   {/* Image Upload Section */}
                   <div className="mb-6 p-4 bg-gray-50 rounded-xl">
-                    <h4 className="text-sm font-medium text-gray-700 mb-3">Upload Main Image</h4>
+                    <h4 className="text-sm font-medium text-gray-700 mb-3">Upload Tour Images</h4>
                     <MediaUpload
                       key={uploadKey}
                       onUploadComplete={handleUploadComplete}
                       folder="tours"
                       accept="image/*"
                       maxSize={5 * 1024 * 1024} // 5MB
+                      multiple={true}
+                      maxFiles={10}
+                      showPreview={true}
                     />
                     <p className="text-xs text-gray-500 mt-2">
-                      Upload an image to automatically populate the first image URL below
+                      Upload multiple images for your tour gallery (max 10 images, 5MB each)
                     </p>
                   </div>
 

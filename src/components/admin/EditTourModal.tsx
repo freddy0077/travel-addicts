@@ -179,10 +179,10 @@ export default function EditTourModal({
 
   const handleUploadComplete = (file: any) => {
     if (file && file.url) {
-      // Update the first image URL with the uploaded image (same pattern as AddTourModal)
+      // Add the uploaded image to the images array
       setFormData(prev => ({
         ...prev,
-        images: [file.url, ...prev.images.slice(1)]
+        images: [...prev.images, file.url]
       }));
       
       // Force re-render of MediaUpload component for subsequent uploads
@@ -404,12 +404,15 @@ export default function EditTourModal({
                           Gallery Images
                         </label>
                         <MediaUpload
-                          uploadKey={uploadKey}
+                          key={uploadKey}
                           onUploadComplete={handleUploadComplete}
                           folder="tours"
                           className="w-full"
                           showPreview={true}
+                          multiple={true}
                           maxFiles={10}
+                          accept="image/*"
+                          maxSize={5 * 1024 * 1024} // 5MB
                         />
                         <div className="mt-3">
                           <label className="block text-sm font-medium text-gray-600 mb-1">

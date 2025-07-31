@@ -63,7 +63,7 @@ export default function AddDestinationModal({ isOpen, onClose, onDestinationAdde
   const [currentStep, setCurrentStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-  const [uploadKey, setUploadKey] = useState(0);
+  const [uploadKey, setUploadKey] = useState('0');
 
   const handleInputChange = (field: keyof DestinationFormData, value: string | boolean) => {
     setFormData(prev => ({
@@ -388,83 +388,77 @@ export default function AddDestinationModal({ isOpen, onClose, onDestinationAdde
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                   {/* Left Column */}
                   <div className="space-y-6">
-                    <div className="group">
-                      <label className="block text-sm font-semibold text-gray-700 mb-3 flex items-center">
-                        <Camera className="h-4 w-4 mr-2 text-purple-500" />
-                        Main Image
-                      </label>
-                      
-                      {/* Image Upload Component */}
-                      <div className="space-y-4">
-                        <MediaUpload
-                          key={uploadKey}
-                          onUploadComplete={(mediaFile) => {
-                            // MediaFile object has a url property
-                            handleInputChange('image', mediaFile.url);
-                            setUploadKey(uploadKey + 1);
-                          }}
-                          onUploadError={(error) => {
-                            setError(`Image upload failed: ${error}`);
-                          }}
-                          folder="destinations"
-                          accept="image/*"
-                          maxFiles={1}
-                          className="border-2 border-dashed border-gray-300 rounded-2xl p-6 hover:border-primary-500 transition-colors"
-                        />
-                        
-                        {/* Manual URL Input (fallback) */}
-                        <div className="relative">
-                          <input
-                            type="url"
-                            value={formData.image}
-                            onChange={(e) => handleInputChange('image', e.target.value)}
-                            className="w-full px-4 py-4 bg-gray-50/50 border-2 border-gray-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500 transition-all duration-300 placeholder-gray-400"
-                            placeholder="Or paste image URL: https://example.com/image.jpg"
-                          />
-                          {formData.image && (
-                            <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-                              <div className="w-8 h-8 rounded-lg overflow-hidden border border-gray-200">
-                                <img 
-                                  src={formData.image} 
-                                  alt="Preview" 
-                                  className="w-full h-full object-cover"
-                                  onError={(e) => {
-                                    e.currentTarget.style.display = 'none';
-                                  }}
-                                />
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                      </div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-3 flex items-center">
+                      <Camera className="h-4 w-4 mr-2 text-primary-500" />
+                      Destination Images
+                    </label>
+                    
+                    {/* Image Upload Section */}
+                    <div className="mb-6 p-4 bg-gray-50 rounded-xl">
+                      <h4 className="text-sm font-medium text-gray-700 mb-3">Upload Destination Images</h4>
+                      <MediaUpload
+                        key={uploadKey}
+                        onUploadComplete={(file) => {
+                          if (file && file.url) {
+                            // Add the uploaded image to the gallery array
+                            setFormData(prev => ({
+                              ...prev,
+                              gallery: [...prev.gallery, file.url],
+                              image: prev.image || file.url // Set as main image if no main image exists
+                            }));
+                            
+                            // Force re-render of MediaUpload component for subsequent uploads
+                            setUploadKey(Date.now().toString());
+                          }
+                        }}
+                        onUploadError={(error) => {
+                          setError(`Image upload failed: ${error}`);
+                        }}
+                        folder="destinations"
+                        accept="image/*"
+                        maxSize={5 * 1024 * 1024} // 5MB
+                        multiple={true}
+                        maxFiles={10}
+                        showPreview={true}
+                      />
+                      <p className="text-xs text-gray-500 mt-2">
+                        Upload multiple images for your destination gallery (max 10 images, 5MB each)
+                      </p>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="group">
-                        <label className="block text-sm font-semibold text-gray-700 mb-3">
-                          Best Time to Visit
-                        </label>
-                        <input
-                          type="text"
-                          value={formData.bestTime}
-                          onChange={(e) => handleInputChange('bestTime', e.target.value)}
-                          className="w-full px-4 py-4 bg-gray-50/50 border-2 border-gray-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500 transition-all duration-300 placeholder-gray-400"
-                          placeholder="April to October"
-                        />
-                      </div>
-
-                      <div className="group">
-                        <label className="block text-sm font-semibold text-gray-700 mb-3">
-                          Climate
-                        </label>
-                        <input
-                          type="text"
-                          value={formData.climate}
-                          onChange={(e) => handleInputChange('climate', e.target.value)}
-                          className="w-full px-4 py-4 bg-gray-50/50 border-2 border-gray-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500 transition-all duration-300 placeholder-gray-400"
-                          placeholder="Mediterranean"
-                        />
-                      </div>
+                    {/* Manual URL Inputs */}
+                    <div className="space-y-4">
+                      <h4 className="text-sm font-medium text-gray-700">Image URLs</h4>
+                      {formData.gallery.map((image, index) => (
+                        <div key={index} className="mb-4">
+                          <div className="flex items-center space-x-2 mb-2">
+                            <input
+                              type="url"
+                              className="flex-1 px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200"
+                              placeholder={index === 0 ? "Main image URL (auto-filled from upload above)" : "https://example.com/destination-image.jpg"}
+                              value={image}
+                              onChange={(e) => handleArrayChange('gallery', index, e.target.value)}
+                            />
+                            {formData.gallery.length > 1 && (
+                              <button
+                                type="button"
+                                onClick={() => removeArrayItem('gallery', index)}
+                                className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                              >
+                                <Minus className="h-4 w-4" />
+                              </button>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                      <button
+                        type="button"
+                        onClick={() => addArrayItem('gallery')}
+                        className="flex items-center text-primary-600 hover:text-primary-700 text-sm font-medium"
+                      >
+                        <Plus className="h-4 w-4 mr-1" />
+                        Add Image URL
+                      </button>
                     </div>
                   </div>
 
