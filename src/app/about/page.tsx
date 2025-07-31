@@ -91,7 +91,7 @@ export default function AboutPage() {
                   <div className="text-white text-center">
                     <Music className="w-16 h-16 mx-auto mb-4" />
                     <h3 className="text-2xl font-bold mb-2">Music Meets Travel</h3>
-                    <p className="text-orange-100">Where culture, music, and adventure unite</p>
+                      <p className="text-orange-100">Where Music, Travel, and Tourism unite</p>
                   </div>
                 </div>
               </div>
@@ -299,7 +299,7 @@ export default function AboutPage() {
               whileInView={{ opacity: 1, y: 0 }}
               className="text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-6"
             >
-              Vision & Mission
+              Mission & Vision
             </motion.h2>
           </div>
 

@@ -291,10 +291,10 @@ export default function TourDetailPage({ params }: { params: Promise<{ slug: str
                   <Clock className="w-4 h-4" />
                   <span>{tourData.duration} Days</span>
                 </div>
-                <div className="flex items-center space-x-1">
-                  <Users className="w-4 h-4" />
-                  <span>Max {tourData.groupSizeMax}</span>
-                </div>
+                {/*<div className="flex items-center space-x-1">*/}
+                {/*  <Users className="w-4 h-4" />*/}
+                {/*  <span>Max {tourData.groupSizeMax}</span>*/}
+                {/*</div>*/}
                 <div className="flex items-center space-x-2">
                   <div className="flex items-center space-x-1">
                     <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />

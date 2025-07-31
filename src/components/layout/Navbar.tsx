@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -43,8 +44,14 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
-            <div className="w-10 h-10 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-xl flex items-center justify-center">
-              <span className="text-white font-bold text-lg">{LOGO.text}</span>
+            <div className="relative w-12 h-12">
+              <Image
+                src="/images/logo.PNG"
+                alt={BRAND.name}
+                fill
+                className="object-contain"
+                priority
+              />
             </div>
             {LOGO.showFullName && (
               <span className="font-serif font-bold text-xl text-gray-900 transition-colors">
@@ -54,34 +61,35 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-8">
+          <div className="hidden md:flex items-center space-x-8">
+            <div className="flex items-baseline space-x-8">
               {navigation.map((item) => (
                 <Link
                   key={item.name}
                   href={item.href}
                   className={cn(
-                    'px-3 py-2 text-sm font-medium transition-colors hover:text-primary-600 relative group',
+                    'relative px-3 py-2 text-sm font-medium transition-colors duration-200',
                     pathname === item.href
                       ? 'text-primary-600'
-                      : 'text-gray-700'
+                      : 'text-neutral-700 hover:text-primary-600'
                   )}
                 >
                   {item.name}
-                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-500 transition-all duration-300 group-hover:w-full"></span>
                   {pathname === item.href && (
-                    <span className="absolute bottom-0 left-0 w-full h-0.5 bg-primary-500"></span>
+                    <motion.div
+                      layoutId="navbar-indicator"
+                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-primary-500 to-secondary-500"
+                      initial={false}
+                    />
                   )}
                 </Link>
               ))}
             </div>
-          </div>
 
-          {/* CTA Button */}
-          <div className="hidden md:block">
+            {/* CTA Button */}
             <Link
               href="/tours"
-              className="bg-gradient-to-r from-primary-500 to-secondary-500 text-white px-6 py-2 rounded-full text-sm font-semibold hover:from-primary-600 hover:to-secondary-600 transition-all duration-200 shadow-medium hover:shadow-large"
+              className="bg-gradient-to-r from-primary-500 to-secondary-500 text-white px-6 py-2.5 rounded-full font-semibold hover:from-primary-600 hover:to-secondary-600 transition-all duration-200 shadow-lg hover:shadow-xl"
             >
               Book Now
             </Link>

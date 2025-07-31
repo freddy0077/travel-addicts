@@ -155,17 +155,17 @@ export default function Home() {
             className="space-y-8"
           >
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif font-bold text-white leading-tight">
-              Discover Africa's
+              Travel Addicts <br />
               <br />
               <span className="text-gradient bg-gradient-to-r from-primary-400 to-secondary-400 bg-clip-text text-transparent">
                 Hidden Treasures
               </span>
             </h1>
             <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed">
-              Embark on extraordinary African adventures crafted by local experts. 
+              Embark on extraordinary African adventures crafted by local experts.
               Experience authentic culture, breathtaking wildlife, and unforgettable moments across the continent.
             </p>
-            
+
             <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6">
               <Link
                 href="/tours"

@@ -2,6 +2,7 @@
 
 import { useState, ReactNode } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import { 
   LayoutDashboard, 
@@ -10,7 +11,7 @@ import {
   FileText, 
   Users, 
   Calendar, 
-  Image, 
+  Image as ImageIcon, 
   Settings, 
   Menu, 
   X,
@@ -32,9 +33,9 @@ const navigation = [
   { name: 'Tours', href: '/admin/tours', icon: Plane },
   { name: 'Blog', href: '/admin/blog', icon: FileText },
   { name: 'Bookings', href: '/admin/bookings', icon: Calendar },
-  { name: 'Gallery', href: '/admin/gallery', icon: Image },
+  { name: 'Gallery', href: '/admin/gallery', icon: ImageIcon },
   { name: 'Customers', href: '/admin/customers', icon: Users },
-  // { name: 'Media', href: '/admin/media', icon: Image },
+  // { name: 'Media', href: '/admin/media', icon: ImageIcon },
   { name: 'Settings', href: '/admin/settings', icon: Settings },
 ];
 
@@ -63,8 +64,13 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
         <div className="fixed inset-y-0 left-0 flex w-64 flex-col bg-white shadow-xl">
           <div className="flex h-16 items-center justify-between px-4">
             <div className="flex items-center">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-600 text-white font-bold">
-                {LOGO.text}
+              <div className="relative w-8 h-8">
+                <Image
+                  src="/images/logo.PNG"
+                  alt={BRAND.name}
+                  fill
+                  className="object-contain"
+                />
               </div>
               <span className="ml-2 text-lg font-semibold text-gray-900">Admin</span>
             </div>
@@ -106,8 +112,13 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col">
         <div className="flex flex-col flex-grow bg-white border-r border-gray-200 pt-5 pb-4 overflow-y-auto">
           <div className="flex items-center flex-shrink-0 px-4">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-600 text-white font-bold">
-              {LOGO.text}
+            <div className="relative w-8 h-8">
+              <Image
+                src="/images/logo.PNG"
+                alt={BRAND.name}
+                fill
+                className="object-contain"
+              />
             </div>
             <span className="ml-2 text-lg font-semibold text-gray-900">
               {BRAND.name} Admin

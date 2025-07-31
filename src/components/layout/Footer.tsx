@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { Facebook, Twitter, Instagram, Linkedin, Mail, Phone, MapPin } from 'lucide-react';
 import { BRAND } from '@/lib/brand';
 
@@ -41,14 +42,19 @@ const socialLinks = [
 
 export default function Footer() {
   return (
-    <footer className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
+    <footer className="bg-gradient-to-br from-earth-900 via-earth-800 to-neutral-900 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
           {/* Brand Section */}
           <div className="lg:col-span-2">
             <div className="flex items-center space-x-3 mb-6">
-              <div className="w-12 h-12 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-xl flex items-center justify-center">
-                <span className="text-white font-bold text-xl">TA</span>
+              <div className="relative w-12 h-12">
+                <Image
+                  src="/images/logo.PNG"
+                  alt={BRAND.name}
+                  fill
+                  className="object-contain"
+                />
               </div>
               <span className="text-2xl font-serif font-bold">{BRAND.name}</span>
             </div>

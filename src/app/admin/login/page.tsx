@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Eye, EyeOff, LogIn } from 'lucide-react';
 import { BRAND, LOGO } from '@/lib/brand';
 import { graphqlClient, LOGIN_MUTATION } from '@/lib/graphql-client';
@@ -55,8 +56,14 @@ export default function AdminLogin() {
       <div className="max-w-md w-full space-y-8">
         <div>
           <div className="flex justify-center">
-            <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary-600 text-white font-bold text-xl">
-              {LOGO.text}
+            <div className="relative w-12 h-12">
+              <Image
+                src="/images/logo.PNG"
+                alt={BRAND.name}
+                fill
+                className="object-contain"
+                priority
+              />
             </div>
           </div>
           <h2 className="mt-6 text-center text-3xl font-bold text-gray-900">
