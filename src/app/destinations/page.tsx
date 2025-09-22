@@ -76,9 +76,9 @@ export default function DestinationsPage() {
     return [
       '/images/destinations/serengeti-migration.jpg',
       '/images/destinations/kilimanjaro-sunrise.jpg',
-      '/images/destinations/victoria-falls.jpg',
-      '/images/destinations/zanzibar-beach.jpg',
-      '/images/destinations/cape-town-table-mountain.jpg'
+      // '/images/destinations/victoria-falls.jpg',
+      // '/images/destinations/zanzibar-beach.jpg',
+      // '/images/destinations/cape-town-table-mountain.jpg'
     ];
   }, []);
 
@@ -602,12 +602,12 @@ export default function DestinationsPage() {
 
                       {/* Footer */}
                       <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-                        <div>
-                          <p className="text-sm text-gray-500">From</p>
-                          <p className="text-lg font-bold text-gray-900">
-                            {formatPrice(destination.priceFrom)}
-                          </p>
-                        </div>
+                        {/*<div>*/}
+                        {/*  <p className="text-sm text-gray-500">From</p>*/}
+                        {/*  <p className="text-lg font-bold text-gray-900">*/}
+                        {/*    {formatPrice(destination.priceFrom)}*/}
+                        {/*  </p>*/}
+                        {/*</div>*/}
                         <Link
                           href={`/destinations/${destination.slug}`}
                           className="flex items-center px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
