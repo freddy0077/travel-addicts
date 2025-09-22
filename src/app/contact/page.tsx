@@ -328,7 +328,7 @@ export default function ContactPage() {
                           value={formData.phone}
                           onChange={handleInputChange}
                           className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
-                          placeholder="+1 (555) 123-4567"
+                          placeholder="+233 244 000 0000"
                         />
                       </div>
                     </div>
@@ -500,7 +500,7 @@ export default function ContactPage() {
                 <MapPin className="w-12 h-12 text-gray-400 mx-auto mb-4" />
                 <p className="text-gray-600">Interactive map would be integrated here</p>
                 <p className="text-sm text-gray-500 mt-2">
-                  123 Travel Street, New York, NY 10001
+                    Kumsark Estates, Oyarifa, Accra-Ghana
                 </p>
               </div>
             </div>
