@@ -84,7 +84,7 @@ export default function DestinationPage({ params }: DestinationPageProps) {
     { id: 'overview', label: 'Overview', icon: <Globe className="w-4 h-4" /> },
     { id: 'activities', label: 'Activities', icon: <Activity className="w-4 h-4" /> },
     { id: 'accommodation', label: 'Stay', icon: <MapPin className="w-4 h-4" /> },
-    { id: 'transport', label: 'Getting There', icon: <Plane className="w-4 h-4" /> }
+    // { id: 'transport', label: 'Getting There', icon: <Plane className="w-4 h-4" /> }
   ];
 
   const heroImage = getDestinationHeroImage(destination);
@@ -316,42 +316,42 @@ export default function DestinationPage({ params }: DestinationPageProps) {
 
                 {/* Gallery Section */}
                 <div>
-                  <h3 className="text-2xl font-semibold text-gray-800 mb-6 flex items-center">
-                    <Camera className="w-6 h-6 mr-3 text-orange-500" />
-                    African Landscapes & Experiences
-                  </h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {imageGallery.map((image: any, index: number) => (
-                      <motion.div 
-                        key={index} 
-                        className="relative aspect-[4/3] rounded-xl overflow-hidden group cursor-pointer shadow-lg hover:shadow-xl transition-all duration-300"
-                        whileHover={{ y: -5 }}
-                        onClick={() => setActiveImageIndex(index)}
-                      >
-                        <Image
-                          src={image.path}
-                          alt={image.description}
-                          fill
-                          className="object-cover group-hover:scale-110 transition-transform duration-500"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                        <div className="absolute bottom-0 left-0 right-0 p-4 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                          <h4 className="font-semibold text-sm mb-1">{image.destination}</h4>
-                          <p className="text-xs text-white/80">{image.description}</p>
-                        </div>
-                        <div className="absolute top-3 right-3 bg-white/20 backdrop-blur-sm rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                          <Camera className="w-4 h-4 text-white" />
-                        </div>
-                      </motion.div>
-                    ))}
-                  </div>
+                  {/*<h3 className="text-2xl font-semibold text-gray-800 mb-6 flex items-center">*/}
+                  {/*  <Camera className="w-6 h-6 mr-3 text-orange-500" />*/}
+                  {/*  African Landscapes & Experiences*/}
+                  {/*</h3>*/}
+                  {/*<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">*/}
+                  {/*  {imageGallery.map((image: any, index: number) => (*/}
+                  {/*    <motion.div */}
+                  {/*      key={index} */}
+                  {/*      className="relative aspect-[4/3] rounded-xl overflow-hidden group cursor-pointer shadow-lg hover:shadow-xl transition-all duration-300"*/}
+                  {/*      whileHover={{ y: -5 }}*/}
+                  {/*      onClick={() => setActiveImageIndex(index)}*/}
+                  {/*    >*/}
+                  {/*      <Image*/}
+                  {/*        src={image.path}*/}
+                  {/*        alt={image.description}*/}
+                  {/*        fill*/}
+                  {/*        className="object-cover group-hover:scale-110 transition-transform duration-500"*/}
+                  {/*      />*/}
+                  {/*      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />*/}
+                  {/*      <div className="absolute bottom-0 left-0 right-0 p-4 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">*/}
+                  {/*        <h4 className="font-semibold text-sm mb-1">{image.destination}</h4>*/}
+                  {/*        <p className="text-xs text-white/80">{image.description}</p>*/}
+                  {/*      </div>*/}
+                  {/*      <div className="absolute top-3 right-3 bg-white/20 backdrop-blur-sm rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">*/}
+                  {/*        <Camera className="w-4 h-4 text-white" />*/}
+                  {/*      </div>*/}
+                  {/*    </motion.div>*/}
+                  {/*  ))}*/}
+                  {/*</div>*/}
                   
                   {/* Gallery Description */}
-                  <div className="mt-6 p-4 bg-gradient-to-r from-orange-50 to-red-50 rounded-xl border border-orange-100">
-                    <p className="text-gray-700 text-sm leading-relaxed">
-                      <span className="font-semibold text-orange-600">Discover Africa's Beauty:</span> These stunning landscapes showcase the diverse beauty of African destinations, from pristine beaches and majestic mountains to vibrant wildlife and ancient cultural sites. Each image represents the authentic African experience waiting for you.
-                    </p>
-                  </div>
+                  {/*<div className="mt-6 p-4 bg-gradient-to-r from-orange-50 to-red-50 rounded-xl border border-orange-100">*/}
+                  {/*  <p className="text-gray-700 text-sm leading-relaxed">*/}
+                  {/*    <span className="font-semibold text-orange-600">Discover Africa's Beauty:</span> These stunning landscapes showcase the diverse beauty of African destinations, from pristine beaches and majestic mountains to vibrant wildlife and ancient cultural sites. Each image represents the authentic African experience waiting for you.*/}
+                  {/*  </p>*/}
+                  {/*</div>*/}
                 </div>
               </motion.div>
             )}
@@ -544,11 +544,11 @@ export default function DestinationPage({ params }: DestinationPageProps) {
                 <div className="space-y-3">
                   <div className="flex items-center space-x-3">
                     <Phone className="w-5 h-5 text-primary-600" />
-                    <span className="text-gray-600">+233 30 123 4567</span>
+                    <span className="text-gray-600">+233 59 387 8403</span>
                   </div>
                   <div className="flex items-center space-x-3">
                     <Mail className="w-5 h-5 text-primary-600" />
-                    <span className="text-gray-600">hello@traveladdicts.org</span>
+                    <span className="text-gray-600">bookings@traveladdicts.org</span>
                   </div>
                 </div>
               </div>

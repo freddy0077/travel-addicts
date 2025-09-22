@@ -262,14 +262,14 @@ export default function DestinationsPage() {
               <MapPin className="w-5 h-5" />
               <span>{destinations.length}+ Destinations</span>
             </div>
-            <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-6 py-3">
-              <Star className="w-5 h-5" />
-              <span>4.8 Average Rating</span>
-            </div>
-            <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-6 py-3">
-              <Users className="w-5 h-5" />
-              <span>50K+ Happy Travelers</span>
-            </div>
+            {/*<div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-6 py-3">*/}
+            {/*  <Star className="w-5 h-5" />*/}
+            {/*  <span>4.8 Average Rating</span>*/}
+            {/*</div>*/}
+            {/*<div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-6 py-3">*/}
+            {/*  <Users className="w-5 h-5" />*/}
+            {/*  <span>50K+ Happy Travelers</span>*/}
+            {/*</div>*/}
           </motion.div>
         </div>
       </section>
@@ -475,12 +475,12 @@ export default function DestinationsPage() {
 
                       {/* Footer */}
                       <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-                        <div>
-                          <p className="text-sm text-gray-500">From</p>
-                          <p className="text-lg font-bold text-gray-900">
-                            {formatPrice(destination.priceFrom)}
-                          </p>
-                        </div>
+                        {/*<div>*/}
+                        {/*  <p className="text-sm text-gray-500">From</p>*/}
+                        {/*  <p className="text-lg font-bold text-gray-900">*/}
+                        {/*    {formatPrice(destination.priceFrom)}*/}
+                        {/*  </p>*/}
+                        {/*</div>*/}
                         <Link
                           href={`/destinations/${destination.slug}`}
                           className="flex items-center px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
