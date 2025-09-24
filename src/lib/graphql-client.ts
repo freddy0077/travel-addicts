@@ -1041,6 +1041,36 @@ export const MEDIA_FILES_QUERY = `
   }
 `;
 
+// Custom Booking Mutation
+export const SUBMIT_CUSTOM_BOOKING_MUTATION = `
+  mutation SubmitCustomBooking(
+    $name: String!,
+    $email: String!,
+    $phone: String,
+    $destination: String!,
+    $travelDates: String!,
+    $travelers: Int!,
+    $budget: Int!,
+    $message: String!
+  ) {
+    submitCustomBooking(
+      input: {
+        name: $name,
+        email: $email,
+        phone: $phone,
+        destination: $destination,
+        travelDates: $travelDates,
+        travelers: $travelers,
+        budget: $budget,
+        message: $message
+      }
+    ) {
+      success
+      message
+    }
+  }
+`;
+
 // Helper functions
 export const formatPrice = (priceInUsd: number): string => {
   return `$${priceInUsd.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;

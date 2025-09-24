@@ -4,36 +4,8 @@ import { useState, Fragment } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Dialog, Transition } from '@headlessui/react';
 import { X, Send, User, Mail, MapPin, Calendar, Users, DollarSign, MessageSquare, Sparkles } from 'lucide-react';
-import { gql, useMutation } from '@apollo/client';
+import { graphqlClient, SUBMIT_CUSTOM_BOOKING_MUTATION } from '@/lib/graphql-client';
 
-const SUBMIT_CUSTOM_BOOKING = gql`
-  mutation SubmitCustomBooking(
-    $name: String!,
-    $email: String!,
-    $phone: String,
-    $destination: String!,
-    $travelDates: String!,
-    $travelers: Int!,
-    $budget: Int!,
-    $message: String!
-  ) {
-    submitCustomBooking(
-      input: {
-        name: $name,
-        email: $email,
-        phone: $phone,
-        destination: $destination,
-        travelDates: $travelDates,
-        travelers: $travelers,
-        budget: $budget,
-        message: $message
-      }
-    ) {
-      success
-      message
-    }
-  }
-`;
 
 interface CustomBookingModalProps {
   isOpen: boolean;
@@ -52,7 +24,7 @@ export default function CustomBookingModal({ isOpen, onClose }: CustomBookingMod
     message: '',
   });
   const [submissionStatus, setSubmissionStatus] = useState<'idle' | 'success' | 'error'>('idle');
-  const [submitBooking, { loading }] = useMutation(SUBMIT_CUSTOM_BOOKING);
+  const [loading, setLoading] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -71,9 +43,12 @@ export default function CustomBookingModal({ isOpen, onClose }: CustomBookingMod
     console.log('Form data before submission:', formData);
 
     try {
-      console.log('Attempting to call submitBooking mutation...');
-      await submitBooking({ 
-        variables: {
+      setLoading(true);
+      console.log('Attempting to call submitCustomBooking mutation...');
+      
+      const result = await graphqlClient.request<{ submitCustomBooking: { success: boolean; message: string } }>(
+        SUBMIT_CUSTOM_BOOKING_MUTATION,
+        {
           name: formData.name,
           email: formData.email,
           phone: formData.phone,
@@ -83,12 +58,15 @@ export default function CustomBookingModal({ isOpen, onClose }: CustomBookingMod
           budget: parseInt(String(formData.budget), 10),
           message: formData.message,
         }
-      });
-      console.log('Mutation call successful.');
+      );
+      
+      console.log('Mutation call successful:', result);
       setSubmissionStatus('success');
     } catch (err) {
-      console.error('Error calling submitBooking mutation:', err);
+      console.error('Error calling submitCustomBooking mutation:', err);
       setSubmissionStatus('error');
+    } finally {
+      setLoading(false);
     }
   };
 

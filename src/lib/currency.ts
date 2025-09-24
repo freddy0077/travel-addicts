@@ -106,7 +106,8 @@ export const formatPriceWithConversion = async (usdAmount: number): Promise<stri
  */
 export const formatPriceWithConversionSync = (usdAmount: number): string => {
   const ghsAmount = convertUsdToGhsSync(usdAmount);
-  return `${formatPrice(usdAmount, 'USD')} (≈ ${formatPrice(ghsAmount, 'GHS')})`;
+  // return `${formatPrice(usdAmount, 'USD')} (≈ ${formatPrice(ghsAmount, 'GHS')})`;
+  return `${formatPrice(usdAmount, 'USD')}`;
 };
 
 /**

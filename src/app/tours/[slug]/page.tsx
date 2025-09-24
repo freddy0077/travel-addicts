@@ -831,21 +831,21 @@ export default function TourDetailPage({ params }: { params: Promise<{ slug: str
               </div>
 
               <div className="space-y-4 mb-6">
-                <div>
-                  <label className="block text-sm font-medium text-neutral-700 mb-2">
-                    Select Date
-                  </label>
-                  <select
-                    value={selectedDate}
-                    onChange={(e) => setSelectedDate(e.target.value)}
-                    className="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                  >
-                    <option value="">Choose a date</option>
-                    {getAvailableDates().map((date) => (
-                      <option key={date} value={date}>{formatDate(date)}</option>
-                    ))}
-                  </select>
-                </div>
+                {/*<div>*/}
+                {/*  <label className="block text-sm font-medium text-neutral-700 mb-2">*/}
+                {/*    Select Date*/}
+                {/*  </label>*/}
+                {/*  <select*/}
+                {/*    value={selectedDate}*/}
+                {/*    onChange={(e) => setSelectedDate(e.target.value)}*/}
+                {/*    className="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"*/}
+                {/*  >*/}
+                {/*    <option value="">Choose a date</option>*/}
+                {/*    {getAvailableDates().map((date) => (*/}
+                {/*      <option key={date} value={date}>{formatDate(date)}</option>*/}
+                {/*    ))}*/}
+                {/*  </select>*/}
+                {/*</div>*/}
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
