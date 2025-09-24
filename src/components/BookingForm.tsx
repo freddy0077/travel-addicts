@@ -631,17 +631,17 @@ export default function BookingForm({ tour, onBookingSuccess }: BookingFormProps
                   required
                 />
               </div>
-              <div>
-                <label className="block text-sm font-medium text-neutral-700 mb-2">
-                  Nationality
-                </label>
-                <input
-                  type="text"
-                  value={customerInfo.nationality || ''}
-                  onChange={(e) => setCustomerInfo({...customerInfo, nationality: e.target.value})}
-                  className="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                />
-              </div>
+              {/*<div>*/}
+              {/*  <label className="block text-sm font-medium text-neutral-700 mb-2">*/}
+              {/*    Nationality*/}
+              {/*  </label>*/}
+              {/*  <input*/}
+              {/*    type="text"*/}
+              {/*    value={customerInfo.nationality || ''}*/}
+              {/*    onChange={(e) => setCustomerInfo({...customerInfo, nationality: e.target.value})}*/}
+              {/*    className="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"*/}
+              {/*  />*/}
+              {/*</div>*/}
               <div>
                 <label className="block text-sm font-medium text-neutral-700 mb-2">
                   Emergency Contact
