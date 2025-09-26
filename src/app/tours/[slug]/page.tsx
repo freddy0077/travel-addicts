@@ -213,7 +213,7 @@ export default function TourDetailPage({ params }: { params: Promise<{ slug: str
     { id: 'overview', label: 'Overview' },
     { id: 'itinerary', label: 'Itinerary' },
     { id: 'dates', label: 'Dates & Pricing' },
-    { id: 'reviews', label: 'Reviews' }
+    // { id: 'reviews', label: 'Reviews' }
   ]
 
   const nextImage = () => {
@@ -295,13 +295,13 @@ export default function TourDetailPage({ params }: { params: Promise<{ slug: str
                 {/*  <Users className="w-4 h-4" />*/}
                 {/*  <span>Max {tourData.groupSizeMax}</span>*/}
                 {/*</div>*/}
-                <div className="flex items-center space-x-2">
+                {/* <div className="flex items-center space-x-2">
                   <div className="flex items-center space-x-1">
                     <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
                     <span className="font-medium">{tourData.rating}</span>
                   </div>
                   <span className="text-white/80">({tourData.reviewCount} reviews)</span>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
@@ -758,7 +758,7 @@ export default function TourDetailPage({ params }: { params: Promise<{ slug: str
                 </motion.div>
               )}
 
-              {activeTab === 'reviews' && (
+              {/* {activeTab === 'reviews' && (
                 <motion.div
                   key="reviews"
                   initial={{ opacity: 0, y: 20 }}
@@ -814,7 +814,7 @@ export default function TourDetailPage({ params }: { params: Promise<{ slug: str
                     )}
                   </div>
                 </motion.div>
-              )}
+              )} */}
             </AnimatePresence>
           </div>
 

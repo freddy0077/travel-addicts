@@ -34,7 +34,7 @@ const navigation = [
   { name: 'Blog', href: '/admin/blog', icon: FileText },
   { name: 'Bookings', href: '/admin/bookings', icon: Calendar },
   { name: 'Gallery', href: '/admin/gallery', icon: ImageIcon },
-  { name: 'Customers', href: '/admin/customers', icon: Users },
+  // { name: 'Customers', href: '/admin/customers', icon: Users },
   // { name: 'Media', href: '/admin/media', icon: ImageIcon },
   { name: 'Settings', href: '/admin/settings', icon: Settings },
 ];

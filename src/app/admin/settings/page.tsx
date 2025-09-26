@@ -59,12 +59,13 @@ interface SettingsData {
 
 export default function SettingsPage() {
   const [activeTab, setActiveTab] = useState('general');
-  const [settings, setSettings] = useState<SettingsData>({
+  // Default settings structure
+  const defaultSettings: SettingsData = {
     general: {
-      siteName: 'Travel Addict',
+      siteName: 'Travel Addicts',
       siteDescription: 'Discover amazing destinations and book unforgettable tours',
-      contactEmail: 'info@traveladdict.com',
-      contactPhone: '+233 123 456 789',
+      contactEmail: 'bookings@traveladdicts.org',
+      contactPhone: '+233 59 387 8403',
       address: 'Accra, Ghana',
       timezone: 'Africa/Accra',
       currency: 'GHS',
@@ -75,8 +76,8 @@ export default function SettingsPage() {
       smtpPort: '587',
       smtpUsername: '',
       smtpPassword: '',
-      fromEmail: 'noreply@traveladdict.com',
-      fromName: 'Travel Addict'
+      fromEmail: 'noreply@traveladdicts.org',
+      fromName: 'Travel Addicts'
     },
     payment: {
       paystackPublicKey: '',
@@ -95,7 +96,9 @@ export default function SettingsPage() {
       passwordMinLength: 8,
       requireStrongPasswords: true
     }
-  });
+  };
+
+  const [settings, setSettings] = useState<SettingsData>(defaultSettings);
   const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [showPasswords, setShowPasswords] = useState(false);
@@ -104,8 +107,8 @@ export default function SettingsPage() {
 
   const tabs = [
     { id: 'general', name: 'General', icon: Globe },
-    { id: 'email', name: 'Email', icon: Mail },
-    { id: 'payment', name: 'Payment', icon: CreditCard },
+    // { id: 'email', name: 'Email', icon: Mail },
+    // { id: 'payment', name: 'Payment', icon: CreditCard },
     { id: 'notifications', name: 'Notifications', icon: Bell },
     { id: 'security', name: 'Security', icon: Shield }
   ];
@@ -124,11 +127,30 @@ export default function SettingsPage() {
   const loadSettings = async () => {
     try {
       setIsLoading(true);
-      // Mock API call - replace with actual backend call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      // Settings are already initialized with mock data
+      
+      // Load settings from localStorage
+      const savedSettings = localStorage.getItem('travelAddicts_settings');
+      if (savedSettings) {
+        const parsedSettings = JSON.parse(savedSettings);
+        // Merge with default settings to ensure all properties exist
+        const mergedSettings = {
+          ...defaultSettings,
+          ...parsedSettings,
+          general: { ...defaultSettings.general, ...parsedSettings.general },
+          email: { ...defaultSettings.email, ...parsedSettings.email },
+          payment: { ...defaultSettings.payment, ...parsedSettings.payment },
+          notifications: { ...defaultSettings.notifications, ...parsedSettings.notifications },
+          security: { ...defaultSettings.security, ...parsedSettings.security }
+        };
+        setSettings(mergedSettings);
+      }
+      
+      // Simulate loading delay for better UX
+      await new Promise(resolve => setTimeout(resolve, 500));
     } catch (error) {
       console.error('Error loading settings:', error);
+      // If there's an error, use default settings
+      setSettings(defaultSettings);
     } finally {
       setIsLoading(false);
     }
@@ -137,26 +159,40 @@ export default function SettingsPage() {
   const handleSave = async () => {
     try {
       setIsSaving(true);
-      // Mock API call - replace with actual backend call
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      // Save settings to localStorage
+      localStorage.setItem('travelAddicts_settings', JSON.stringify(settings));
+      
+      // Simulate API call delay for better UX
+      await new Promise(resolve => setTimeout(resolve, 1000));
       
       setSuccessMessage('Settings saved successfully!');
       setTimeout(() => setSuccessMessage(''), 3000);
     } catch (error) {
       console.error('Error saving settings:', error);
+      setSuccessMessage('Error saving settings. Please try again.');
+      setTimeout(() => setSuccessMessage(''), 3000);
     } finally {
       setIsSaving(false);
     }
   };
 
   const updateSetting = (section: keyof SettingsData, key: string, value: any) => {
-    setSettings(prev => ({
-      ...prev,
+    const newSettings = {
+      ...settings,
       [section]: {
-        ...prev[section],
+        ...settings[section],
         [key]: value
       }
-    }));
+    };
+    setSettings(newSettings);
+    
+    // Auto-save to localStorage on every change (optional - you can remove this if you prefer manual save only)
+    try {
+      localStorage.setItem('travelAddicts_settings', JSON.stringify(newSettings));
+    } catch (error) {
+      console.error('Error auto-saving settings:', error);
+    }
   };
 
   const renderGeneralSettings = () => (

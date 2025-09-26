@@ -173,10 +173,10 @@ export default function Home() {
               >
                 Explore Tours
               </Link>
-              <button className="flex items-center space-x-2 px-6 py-4 bg-white/10 backdrop-blur-sm text-white font-medium rounded-full hover:bg-white/20 transition-colors">
-                <Play className="w-5 h-5" />
-                <span>Watch Video</span>
-              </button>
+              {/*<button className="flex items-center space-x-2 px-6 py-4 bg-white/10 backdrop-blur-sm text-white font-medium rounded-full hover:bg-white/20 transition-colors">*/}
+              {/*  <Play className="w-5 h-5" />*/}
+              {/*  <span>Watch Video</span>*/}
+              {/*</button>*/}
             </div>
           </motion.div>
 
@@ -355,11 +355,11 @@ export default function Home() {
           ) : (
             <div>
               {/* Debug info */}
-              <div className="mb-4 p-4 bg-yellow-100 rounded-lg">
-                <p className="text-sm text-gray-800">
-                  Debug: Found {popularDestinations.length} destinations: {popularDestinations.map(d => d.name).join(', ')}
-                </p>
-              </div>
+              {/*<div className="mb-4 p-4 bg-yellow-100 rounded-lg">*/}
+              {/*  <p className="text-sm text-gray-800">*/}
+              {/*    Debug: Found {popularDestinations.length} destinations: {popularDestinations.map(d => d.name).join(', ')}*/}
+              {/*  </p>*/}
+              {/*</div>*/}
               
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {popularDestinations.map((destination, index) => (
@@ -467,11 +467,11 @@ export default function Home() {
                         {testimonial.location}
                       </p>
                     </div>
-                    <div className="flex ml-auto">
+                    {/* <div className="flex ml-auto">
                       {[...Array(testimonial.rating)].map((_, i) => (
                         <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
                       ))}
-                    </div>
+                    </div> */}
                   </div>
                 </motion.div>
               ))}

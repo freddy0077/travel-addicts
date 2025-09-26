@@ -490,20 +490,44 @@ export default function ContactPage() {
           <div className="text-center mb-12">
             <h2 className="text-4xl font-serif font-bold text-gray-900 mb-4">Visit Our Office</h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Located in the heart of New York City, our office is open for consultations by appointment.
+              Located in the heart of Accra, our office is open for consultations by appointment.
             </p>
           </div>
           
           <div className="bg-white rounded-3xl shadow-large overflow-hidden">
-            <div className="h-96 bg-gray-200 flex items-center justify-center">
-              <div className="text-center">
-                <MapPin className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                <p className="text-gray-600">Interactive map would be integrated here</p>
-                <p className="text-sm text-gray-500 mt-2">
-                    Kumsark Estates, Oyarifa, Accra-Ghana
-                </p>
+              <div className="h-96 relative">
+                  <iframe
+                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3970.477828222721!2d-0.15147232411202993!3d5.643784494337436!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xfdf8500133a6547%3A0xa63615a067ef3d5!2sOyarifa!5e0!3m2!1sen!2sgh!4v1758920571542!5m2!1sen!2sgh"
+                      width="100%"
+                      height="100%"
+                      style={{border: 0}}
+                      allowFullScreen=""
+                      loading="lazy"
+                      className="rounded-3xl"
+                      title="Travel Addicts Office Location - Oyarifa, Accra, Ghana"
+                      referrerPolicy="no-referrer-when-downgrade"></iframe>
+
+                  {/* Overlay with address info */}
+                  <div
+                      className="absolute bottom-4 left-4 bg-white/95 backdrop-blur-sm rounded-xl p-4 shadow-medium max-w-sm">
+                      <div className="flex items-start gap-3">
+                          <div
+                              className="w-8 h-8 bg-primary-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                              <MapPin className="w-4 h-4 text-primary-600"/>
+                          </div>
+                          <div>
+                              <h3 className="font-semibold text-gray-900 mb-1">Our Office</h3>
+                              <p className="text-sm text-gray-600">
+                                  Kumsark Estates, Oyarifa<br/>
+                                  Accra, Ghana
+                              </p>
+                              <p className="text-xs text-gray-500 mt-1">
+                                  Visit by appointment only
+                              </p>
+                          </div>
+                      </div>
+                  </div>
               </div>
-            </div>
           </div>
         </motion.section>
       </div>

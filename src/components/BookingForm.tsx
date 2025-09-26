@@ -81,6 +81,9 @@ export default function BookingForm({ tour, onBookingSuccess }: BookingFormProps
   const [paymentVerified, setPaymentVerified] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState<'online' | 'cash'>('cash'); 
   const [cashPaymentReceipt, setCashPaymentReceipt] = useState<File | null>(null);
+  
+  // Track if booking attempt has been made to silence errors
+  const [bookingAttempted, setBookingAttempted] = useState(false);
 
   useEffect(() => {
     initializeTravelers(adults, children);
@@ -156,6 +159,7 @@ export default function BookingForm({ tour, onBookingSuccess }: BookingFormProps
 
   // Handle form submission
   const handleSubmit = async () => {
+    setBookingAttempted(true);
     try {
       // Calculate end date based on tour duration
       const startDate = new Date(selectedDate);

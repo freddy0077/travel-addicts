@@ -87,7 +87,7 @@ export default function TourCard({ tour, className }: TourCardProps) {
       {/* Content */}
       <div className="p-6">
         {/* Rating */}
-        <div className="flex items-center space-x-2 mb-3">
+        {/* <div className="flex items-center space-x-2 mb-3">
           <div className="flex items-center space-x-1">
             {[...Array(5)].map((_, i) => (
               <Star
@@ -107,7 +107,7 @@ export default function TourCard({ tour, className }: TourCardProps) {
           <span className="text-sm text-neutral-500">
             ({tour.reviewCount} reviews)
           </span>
-        </div>
+        </div> */}
 
         {/* Title */}
         <h3 className="text-xl font-semibold text-neutral-900 mb-3 line-clamp-2 group-hover:text-primary-600 transition-colors">
